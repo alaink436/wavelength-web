@@ -1,48 +1,61 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b;
-  --foreground: #fafafa;
-  --surface: #18181b;
-  --surface-elevated: #27272a;
+  /* Linear-inspired dark system */
+  --background: #08090a;
+  --background-panel: #0f1011;
+  --surface: #191a1b;
+  --surface-secondary: #28282c;
+
+  --foreground: #f7f8f8;
+  --text-secondary: #d0d6e0;
+  --text-tertiary: #8a8f98;
+  --text-quaternary: #62666d;
+
+  /* Wavelength accent — kept as brand blue */
   --accent: #3b82f6;
-  --accent-light: #60a5fa;
-  --accent-muted: rgba(59, 130, 246, 0.12);
-  --border: #27272a;
-  --text-secondary: #a1a1aa;
-  --text-tertiary: #71717a;
+  --accent-hover: #60a5fa;
+  --accent-muted: rgba(59, 130, 246, 0.10);
+
+  /* Linear-style borders — semi-transparent white */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+
+  /* Status */
   --error: #ef4444;
   --success: #10b981;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-panel: var(--background-panel);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
-  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-secondary: var(--surface-secondary);
   --color-accent: var(--accent);
-  --color-accent-light: var(--accent-light);
+  --color-accent-hover: var(--accent-hover);
   --color-accent-muted: var(--accent-muted);
   --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
   --color-text-secondary: var(--text-secondary);
   --color-text-tertiary: var(--text-tertiary);
+  --color-text-quaternary: var(--text-quaternary);
   --color-error: var(--error);
   --color-success: var(--success);
-  --font-sans: var(--font-dm-sans);
-  --font-mono: var(--font-space-mono);
+  --font-sans: var(--font-inter);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-feature-settings: "cv01", "ss03";
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
+/* Linear-style scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -50,12 +63,11 @@ html {
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--surface-elevated);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 3px;
 }
 
-/* Selection color */
 ::selection {
-  background: rgba(59, 130, 246, 0.3);
-  color: #fafafa;
+  background: rgba(59, 130, 246, 0.25);
+  color: #f7f8f8;
 }

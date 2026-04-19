@@ -36,8 +36,8 @@ export default function ValuesPage() {
   return (
     <main className="min-h-screen flex flex-col">
       {/* Top bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
-        <div className="h-1 bg-surface">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border-subtle">
+        <div className="h-[2px] bg-[rgba(255,255,255,0.02)]">
           <motion.div
             className="h-full bg-accent"
             initial={false}
@@ -45,13 +45,13 @@ export default function ValuesPage() {
             transition={{ duration: 0.3 }}
           />
         </div>
-        <div className="max-w-3xl mx-auto px-6 h-12 flex items-center justify-between">
-          <span className="text-sm text-text-secondary">
+        <div className="max-w-[640px] mx-auto px-6 h-11 flex items-center justify-between">
+          <span className="text-[13px] font-[510] text-text-tertiary">
             {hasIQResults ? "Part 2 — " : ""}Values & Dealbreakers
           </span>
-          <span className="text-sm text-text-secondary">
-            <span className="text-foreground font-medium">{currentIndex + 1}</span>
-            <span className="text-text-tertiary"> / {VALUES_QUESTIONS.length}</span>
+          <span className="text-[13px] font-[510] text-text-tertiary">
+            <span className="text-foreground">{currentIndex + 1}</span>
+            <span className="text-text-quaternary"> / {VALUES_QUESTIONS.length}</span>
           </span>
         </div>
       </div>
@@ -67,32 +67,32 @@ export default function ValuesPage() {
             transition={{ duration: 0.25 }}
             className="max-w-lg w-full"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs text-text-tertiary uppercase tracking-wide">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[12px] font-[510] text-text-quaternary tracking-[-0.13px]">
                 {question.category}
               </span>
               {question.weight === "hard" && (
-                <span className="text-[10px] font-medium text-error/70 bg-error/10 px-1.5 py-0.5 rounded">
+                <span className="text-[10px] font-[510] text-error/70 bg-error/[0.08] px-1.5 py-0.5 rounded-[4px]">
                   dealbreaker
                 </span>
               )}
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-semibold leading-snug mb-8">
+            <h2 className="text-[20px] sm:text-[24px] font-[510] tracking-[-0.29px] leading-[1.33] mb-8">
               {question.question}
             </h2>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {question.options.map((option) => {
                 const isSelected = answers[question.key] === option.value;
                 return (
                   <button
                     key={option.value}
                     onClick={() => selectAnswer(option.value)}
-                    className={`w-full text-left p-4 rounded-lg border transition-all text-[15px] ${
+                    className={`w-full text-left p-3.5 rounded-[6px] border transition-all text-[14px] tracking-[-0.14px] ${
                       isSelected
-                        ? "border-accent bg-accent-muted text-foreground"
-                        : "border-border hover:border-text-tertiary text-text-secondary hover:text-foreground"
+                        ? "border-accent/40 bg-accent/[0.06] text-foreground"
+                        : "border-border bg-[rgba(255,255,255,0.02)] text-text-secondary hover:bg-[rgba(255,255,255,0.04)] hover:text-foreground"
                     }`}
                   >
                     {option.label}

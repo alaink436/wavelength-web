@@ -23,11 +23,11 @@ const CLUSTER_COLORS: Record<string, string> = {
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.4 },
+    transition: { delay: i * 0.1, duration: 0.45, ease: [0, 0, 0.58, 1] as [number, number, number, number] },
   }),
 };
 
@@ -79,8 +79,8 @@ export default function ResultsPage() {
     return (
       <main className="min-h-screen flex items-center justify-center px-6">
         <div className="text-center">
-          <p className="text-text-secondary mb-4">No test results found.</p>
-          <Link href="/test" className="text-accent hover:text-accent-light transition-colors">
+          <p className="text-text-tertiary text-[15px] mb-4">No test results found.</p>
+          <Link href="/test" className="text-accent hover:text-accent-hover text-[13px] font-[510] transition-colors">
             Take the IQ Test first
           </Link>
         </div>
@@ -89,7 +89,7 @@ export default function ResultsPage() {
   }
 
   return (
-    <main className="min-h-screen py-20 px-6">
+    <main className="min-h-screen py-24 px-6">
       <div className="max-w-lg mx-auto">
         {/* IQ Score */}
         <motion.div
@@ -97,33 +97,33 @@ export default function ResultsPage() {
           initial="hidden"
           animate="visible"
           custom={0}
-          className="text-center mb-12"
+          className="text-center mb-14"
         >
-          <p className="text-accent text-sm font-medium tracking-wide uppercase mb-3">
+          <p className="text-accent text-[13px] font-[510] tracking-[-0.13px] mb-4">
             Your Cognitive Profile
           </p>
 
           <div className="relative inline-flex items-center justify-center mb-4">
             <div
-              className="text-7xl sm:text-8xl font-bold font-mono"
+              className="text-[72px] sm:text-[88px] font-[510] tracking-[-2px]"
               style={{ color: CLUSTER_COLORS[iqResults.cluster] }}
             >
               {iqResults.iq}
             </div>
           </div>
 
-          <div className="mb-2">
+          <div className="mb-3">
             <span
-              className="inline-block text-sm font-medium px-3 py-1 rounded-full"
+              className="inline-block text-[13px] font-[510] px-3 py-1 rounded-[6px]"
               style={{
-                background: `${CLUSTER_COLORS[iqResults.cluster]}15`,
+                background: `${CLUSTER_COLORS[iqResults.cluster]}12`,
                 color: CLUSTER_COLORS[iqResults.cluster],
               }}
             >
               {iqResults.clusterLabel} — {iqResults.percentile}
             </span>
           </div>
-          <p className="text-text-secondary text-sm max-w-sm mx-auto">
+          <p className="text-text-tertiary text-[15px] leading-[1.6] tracking-[-0.165px] max-w-sm mx-auto">
             {iqResults.clusterDescription}
           </p>
         </motion.div>
@@ -134,18 +134,18 @@ export default function ResultsPage() {
           initial="hidden"
           animate="visible"
           custom={1}
-          className="mb-10"
+          className="mb-12"
         >
-          <h3 className="text-sm font-medium text-text-tertiary uppercase tracking-wide mb-4">
+          <h3 className="text-[12px] font-[510] text-text-quaternary tracking-[-0.13px] mb-4">
             Cognitive Dimensions
           </h3>
           <div className="space-y-3">
             {Object.entries(iqResults.categoryAccuracy).map(([cat, acc]) => (
               <div key={cat} className="flex items-center gap-3">
-                <span className="text-sm text-text-secondary w-16">
+                <span className="text-[13px] font-[510] text-text-secondary w-16">
                   {CATEGORY_LABELS[cat]}
                 </span>
-                <div className="flex-1 h-2 bg-surface rounded-full overflow-hidden">
+                <div className="flex-1 h-[6px] bg-[rgba(255,255,255,0.04)] rounded-full overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${acc.accuracy * 100}%` }}
@@ -153,7 +153,7 @@ export default function ResultsPage() {
                     className="h-full rounded-full bg-accent"
                   />
                 </div>
-                <span className="text-sm font-mono text-text-tertiary w-10 text-right">
+                <span className="text-[13px] font-[510] text-text-quaternary w-10 text-right tabular-nums">
                   {Math.round(acc.accuracy * 100)}%
                 </span>
               </div>
@@ -167,22 +167,22 @@ export default function ResultsPage() {
           initial="hidden"
           animate="visible"
           custom={2}
-          className="mb-10"
+          className="mb-12"
         >
-          <h3 className="text-sm font-medium text-text-tertiary uppercase tracking-wide mb-4">
+          <h3 className="text-[12px] font-[510] text-text-quaternary tracking-[-0.13px] mb-4">
             By Difficulty
           </h3>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             {([1, 2, 3] as const).map((d) => {
               const acc = iqResults.difficultyAccuracy[d];
               const labels = ["Easy", "Medium", "Hard"];
               return (
-                <div key={d} className="p-4 rounded-lg border border-border text-center">
-                  <div className="text-2xl font-bold font-mono text-accent mb-1">
+                <div key={d} className="p-4 rounded-[6px] border border-border bg-[rgba(255,255,255,0.02)] text-center">
+                  <div className="text-[24px] font-[510] tracking-[-0.29px] text-foreground mb-1 tabular-nums">
                     {Math.round(acc.accuracy * 100)}%
                   </div>
-                  <div className="text-xs text-text-tertiary">{labels[d - 1]}</div>
-                  <div className="text-xs text-text-tertiary mt-1">
+                  <div className="text-[12px] font-[510] text-text-quaternary">{labels[d - 1]}</div>
+                  <div className="text-[12px] text-text-quaternary/60 mt-1 tabular-nums">
                     {acc.correct}/{acc.total}
                   </div>
                 </div>
@@ -198,16 +198,16 @@ export default function ResultsPage() {
             initial="hidden"
             animate="visible"
             custom={3}
-            className="mb-10"
+            className="mb-12"
           >
-            <h3 className="text-sm font-medium text-text-tertiary uppercase tracking-wide mb-4">
+            <h3 className="text-[12px] font-[510] text-text-quaternary tracking-[-0.13px] mb-4">
               Values Profile
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {profileTags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-sm px-3 py-1.5 rounded-full border border-border text-text-secondary"
+                  className="text-[13px] font-[510] px-3 py-1.5 rounded-[6px] border border-border bg-[rgba(255,255,255,0.02)] text-text-secondary"
                 >
                   {tag}
                 </span>
@@ -222,12 +222,12 @@ export default function ResultsPage() {
           initial="hidden"
           animate="visible"
           custom={4}
-          className="pt-8 border-t border-border"
+          className="pt-10 border-t border-border-subtle"
         >
           {claimed ? (
-            <div className="p-6 rounded-lg border border-success/30 bg-success/5 text-center">
-              <p className="text-success font-medium mb-2">Results saved!</p>
-              <p className="text-text-secondary text-sm">
+            <div className="p-5 rounded-[8px] border border-success/20 bg-success/[0.04]">
+              <p className="text-success text-[14px] font-[510] mb-2">Results saved!</p>
+              <p className="text-text-tertiary text-[14px] leading-[1.6]">
                 When you download Wavelength, sign up with{" "}
                 <span className="text-foreground">{email}</span> and your test
                 results will be imported automatically.
@@ -235,25 +235,25 @@ export default function ResultsPage() {
             </div>
           ) : (
             <>
-              <h3 className="font-semibold mb-2">Transfer your results to the app</h3>
-              <p className="text-text-secondary text-sm mb-4">
+              <h3 className="text-[18px] font-[510] tracking-[-0.2px] mb-2">Transfer your results to the app</h3>
+              <p className="text-text-tertiary text-[15px] leading-[1.6] tracking-[-0.165px] mb-5">
                 Enter your email to save your results. When you sign up for
                 Wavelength with the same email, your IQ profile and values will
                 be pre-loaded.
               </p>
-              <form onSubmit={handleClaim} className="space-y-3">
+              <form onSubmit={handleClaim} className="space-y-2.5">
                 <input
                   type="email"
                   required
                   placeholder="Your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full h-12 px-4 bg-surface border border-border rounded-lg text-foreground placeholder:text-text-tertiary focus:outline-none focus:border-accent transition-colors"
+                  className="w-full h-10 px-3.5 bg-[rgba(255,255,255,0.02)] border border-border rounded-[6px] text-[14px] text-foreground placeholder:text-text-quaternary focus:outline-none focus:border-accent/50 transition-colors"
                 />
                 <button
                   type="submit"
                   disabled={claiming}
-                  className="w-full h-12 bg-accent hover:bg-accent/90 disabled:opacity-50 text-white font-semibold rounded-lg transition-colors"
+                  className="w-full h-10 bg-accent hover:bg-accent-hover disabled:opacity-40 text-white text-[13px] font-[510] rounded-[6px] transition-colors"
                 >
                   {claiming ? "Saving..." : "Save & join waitlist"}
                 </button>
@@ -268,17 +268,17 @@ export default function ResultsPage() {
           initial="hidden"
           animate="visible"
           custom={5}
-          className="mt-8 flex gap-3"
+          className="mt-6 flex gap-2"
         >
           <Link
             href="/test"
-            className="flex-1 h-12 flex items-center justify-center border border-border hover:border-text-tertiary rounded-lg text-sm font-medium text-text-secondary hover:text-foreground transition-colors"
+            className="flex-1 h-10 flex items-center justify-center border border-border bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] rounded-[6px] text-[13px] font-[510] text-text-secondary hover:text-foreground transition-all"
           >
             Retake test
           </Link>
           <Link
             href="/"
-            className="flex-1 h-12 flex items-center justify-center border border-border hover:border-text-tertiary rounded-lg text-sm font-medium text-text-secondary hover:text-foreground transition-colors"
+            className="flex-1 h-10 flex items-center justify-center border border-border bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] rounded-[6px] text-[13px] font-[510] text-text-secondary hover:text-foreground transition-all"
           >
             Back to home
           </Link>
