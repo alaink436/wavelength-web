@@ -317,14 +317,20 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Right — phone mockup */}
+            {/* Right — phone mockup + mascot */}
             <motion.div
               initial={{ opacity: 0, y: 40, rotateY: -8 }}
               animate={{ opacity: 1, y: 0, rotateY: 0 }}
               transition={{ delay: 0.5, duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] }}
-              className="hidden lg:block"
+              className="hidden lg:block relative"
               style={{ perspective: "1200px" }}
             >
+              {/* Mascot peeking from behind phone */}
+              <img
+                src="/mascots/happy.png"
+                alt="Wavelength mascot"
+                className="absolute -left-16 -bottom-8 w-28 h-28 object-contain z-10 drop-shadow-[0_8px_20px_rgba(0,0,0,0.4)]"
+              />
               <PhoneMockup />
             </motion.div>
           </div>
@@ -526,6 +532,19 @@ export default function HomePage() {
         </div>
 
         <div className="max-w-[640px] mx-auto text-center relative">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-6"
+          >
+            <img
+              src="/mascots/thinking.png"
+              alt="Wavelength mascot thinking"
+              className="w-24 h-24 mx-auto object-contain drop-shadow-[0_8px_20px_rgba(99,102,241,0.2)]"
+            />
+          </motion.div>
           <motion.h2
             variants={fadeUp}
             initial="hidden"
