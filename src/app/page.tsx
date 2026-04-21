@@ -75,67 +75,169 @@ function PhoneMockup() {
   return (
     // @ts-expect-error -- telephone web component
     <iphone-16-max mode="dark" style={{ "--width": "220px" }}>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          background: "#0a0a10",
-          display: "flex",
-          flexDirection: "column",
-          fontFamily: "var(--font-inter), system-ui, sans-serif",
-        }}
-      >
-        <div style={{ display: "flex", justifyContent: "space-between", padding: "56px 24px 12px" }}>
-          <span style={{ fontSize: 10, fontWeight: 510, color: "#55555f" }}>wavelength</span>
-          <span style={{ fontSize: 10, fontWeight: 510, color: "#6366f1" }}>IQ 128</span>
-        </div>
-        <div style={{ padding: "0 16px", flex: 1 }}>
-          <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 16, padding: 16, marginBottom: 12 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-              <div style={{ width: 40, height: 40, borderRadius: "50%", background: "linear-gradient(135deg, #6366f1, #3b82f6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 590, color: "white" }}>S</div>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 510, color: "#ededf0" }}>Sarah, 26</div>
-                <div style={{ fontSize: 9, color: "#55555f" }}>92% match</div>
-              </div>
-              <div style={{ marginLeft: "auto", textAlign: "right" }}>
-                <div style={{ fontSize: 16, fontWeight: 510, color: "#6366f1" }}>132</div>
-                <div style={{ fontSize: 8, color: "#55555f" }}>IQ</div>
-              </div>
+      <div style={{ width: "100%", height: "100%", background: "#0a0a10", display: "flex", flexDirection: "column", fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
+        {/* App header with logo + mascot */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "54px 16px 8px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <div style={{ width: 18, height: 18, borderRadius: 5, background: "linear-gradient(135deg, #6366f1, #3b82f6)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="white" strokeWidth="2"><path d="M1 8c2-4 4-4 6 0s4 4 6 0" /></svg>
             </div>
-            {[
-              { label: "Logic", value: 87, color: "#6366f1" },
-              { label: "Verbal", value: 92, color: "#3b82f6" },
-              { label: "Spatial", value: 81, color: "#a78bfa" },
-            ].map((d) => (
-              <div key={d.label} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
-                <span style={{ fontSize: 8, fontWeight: 510, color: "#55555f", width: 36 }}>{d.label}</span>
-                <div style={{ flex: 1, height: 2.5, background: "rgba(255,255,255,0.04)", borderRadius: 2, overflow: "hidden" }}>
-                  <div style={{ width: `${d.value}%`, height: "100%", background: d.color, borderRadius: 2 }} />
-                </div>
-              </div>
-            ))}
+            <span style={{ fontSize: 10, fontWeight: 590, color: "#ededf0", letterSpacing: -0.3 }}>wavelength</span>
           </div>
-          <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 16, padding: 10, marginBottom: 10 }}>
-            <div style={{ fontSize: 8, fontWeight: 510, color: "#55555f", marginBottom: 6 }}>Shared values</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <span style={{ fontSize: 9, fontWeight: 510, color: "#6366f1" }}>IQ 128</span>
+            <img src="/mascots/pose-wave.png" alt="" style={{ width: 20, height: 20, objectFit: "contain" }} />
+          </div>
+        </div>
+
+        {/* Match card with mascot avatar */}
+        <div style={{ padding: "0 12px", flex: 1, overflow: "hidden" }}>
+          <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: 12, marginBottom: 8 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+              <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg, #6366f1, #3b82f6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 590, color: "white" }}>S</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 11, fontWeight: 510, color: "#ededf0" }}>Sarah, 26</div>
+                <div style={{ fontSize: 8, color: "#6366f1", fontWeight: 510 }}>92% match · IQ 132</div>
+              </div>
+              <img src="/mascots/pose-sad.png" alt="" style={{ width: 28, height: 28, objectFit: "contain", opacity: 0.7 }} />
+            </div>
+
+            {/* Mini radar shape as SVG */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 8 }}>
+              <svg viewBox="0 0 80 70" width="80" height="70">
+                <polygon points="40,5 72,25 62,60 18,60 8,25" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+                <polygon points="40,15 60,28 54,52 26,52 20,28" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+                <polygon points="40,10 67,23 58,57 22,57 14,23" fill="rgba(99,102,241,0.12)" stroke="#6366f1" strokeWidth="1" opacity="0.8" />
+                {/* Labels */}
+                <text x="40" y="3" textAnchor="middle" fill="#55555f" fontSize="5" fontWeight="510">Logic</text>
+                <text x="76" y="26" textAnchor="start" fill="#55555f" fontSize="5" fontWeight="510">Pattern</text>
+                <text x="65" y="65" textAnchor="start" fill="#55555f" fontSize="5" fontWeight="510">Verbal</text>
+                <text x="14" y="65" textAnchor="end" fill="#55555f" fontSize="5" fontWeight="510">Math</text>
+                <text x="4" y="26" textAnchor="end" fill="#55555f" fontSize="5" fontWeight="510">Spatial</text>
+              </svg>
+            </div>
+
+            {/* Shared values */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
-              {["Deep thinker", "Night owl", "No kids", "Ambitious"].map((t) => (
-                <span key={t} style={{ fontSize: 8, fontWeight: 510, padding: "2px 6px", borderRadius: 100, background: "rgba(99,102,241,0.08)", color: "rgba(99,102,241,0.8)", border: "1px solid rgba(99,102,241,0.1)" }}>{t}</span>
+              {["Deep thinker", "No kids", "Night owl", "Ambitious"].map((t) => (
+                <span key={t} style={{ fontSize: 7, fontWeight: 510, padding: "2px 5px", borderRadius: 100, background: "rgba(99,102,241,0.08)", color: "rgba(99,102,241,0.7)", border: "1px solid rgba(99,102,241,0.1)" }}>{t}</span>
               ))}
             </div>
           </div>
+
+          {/* Chat preview */}
+          <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: 10, marginBottom: 8 }}>
+            <div style={{ fontSize: 7, fontWeight: 510, color: "#55555f", marginBottom: 6 }}>Chat</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              <div style={{ alignSelf: "flex-start", background: "rgba(255,255,255,0.04)", borderRadius: "10px 10px 10px 3px", padding: "4px 8px", maxWidth: "80%" }}>
+                <span style={{ fontSize: 8, color: "#b4b4c0" }}>That logic puzzle was brutal 😅</span>
+              </div>
+              <div style={{ alignSelf: "flex-end", background: "rgba(99,102,241,0.15)", borderRadius: "10px 10px 3px 10px", padding: "4px 8px", maxWidth: "80%" }}>
+                <span style={{ fontSize: 8, color: "#c4c4ff" }}>Right?? I got stuck on the pattern ones</span>
+              </div>
+              <div style={{ alignSelf: "flex-start", background: "rgba(255,255,255,0.04)", borderRadius: "10px 10px 10px 3px", padding: "4px 8px", maxWidth: "80%" }}>
+                <span style={{ fontSize: 8, color: "#b4b4c0" }}>We should compare scores over coffee ☕</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Connect button */}
           <div style={{ borderRadius: 10, background: "linear-gradient(90deg, #6366f1, #3b82f6)", padding: 1 }}>
-            <div style={{ borderRadius: 9, background: "#0c0c10", padding: "8px 14px", textAlign: "center" }}>
-              <span style={{ fontSize: 10, fontWeight: 510, background: "linear-gradient(90deg, #6366f1, #3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Connect</span>
+            <div style={{ borderRadius: 9, background: "#0c0c10", padding: "7px 12px", textAlign: "center" }}>
+              <span style={{ fontSize: 9, fontWeight: 510, background: "linear-gradient(90deg, #6366f1, #3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Send a message</span>
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-around", padding: "14px 24px", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-          {["Discover", "Matches", "Profile"].map((tab, i) => (
-            <span key={tab} style={{ fontSize: 8, fontWeight: 510, color: i === 0 ? "#6366f1" : "#55555f" }}>{tab}</span>
+
+        {/* Tab bar with icons */}
+        <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center", padding: "10px 16px 14px", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+          {[
+            { label: "Discover", active: true, icon: <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" strokeWidth="1.5" /><circle cx="10" cy="10" r="2" /></svg> },
+            { label: "Matches", active: false, icon: <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4C8 2 4 2 4 6c0 5 6 8 6 8s6-3 6-8c0-4-4-4-6-2Z" /></svg> },
+            { label: "Chat", active: false, icon: <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 14l-1 3 3-1 8-8-2-2-8 8Z" /><rect x="5" y="3" width="12" height="10" rx="3" /></svg> },
+            { label: "Profile", active: false, icon: <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="10" cy="7" r="3" /><path d="M4 16c0-3 2.7-5 6-5s6 2 6 5" /></svg> },
+          ].map((tab) => (
+            <div key={tab.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, color: tab.active ? "#6366f1" : "#55555f" }}>
+              {tab.icon}
+              <span style={{ fontSize: 7, fontWeight: 510 }}>{tab.label}</span>
+            </div>
           ))}
         </div>
       </div>
     </iphone-16-max>
+  );
+}
+
+/* Radar chart SVG for IQ section */
+function RadarChart() {
+  const dims = [
+    { label: "Logic", value: 87 },
+    { label: "Pattern", value: 74 },
+    { label: "Verbal", value: 92 },
+    { label: "Math", value: 69 },
+    { label: "Spatial", value: 81 },
+  ];
+  const cx = 100, cy = 100, maxR = 75;
+  const angles = dims.map((_, i) => (i * 2 * Math.PI) / dims.length - Math.PI / 2);
+  const gridLevels = [0.33, 0.66, 1];
+
+  function polyPoints(values: number[]) {
+    return values.map((v, i) => {
+      const r = (v / 100) * maxR;
+      return `${cx + r * Math.cos(angles[i])},${cy + r * Math.sin(angles[i])}`;
+    }).join(" ");
+  }
+
+  return (
+    <svg viewBox="0 0 200 200" className="w-full max-w-[240px] sm:max-w-[280px]">
+      {/* Grid rings */}
+      {gridLevels.map((level) => (
+        <polygon
+          key={level}
+          points={dims.map((_, i) => {
+            const r = level * maxR;
+            return `${cx + r * Math.cos(angles[i])},${cy + r * Math.sin(angles[i])}`;
+          }).join(" ")}
+          fill="none"
+          stroke="rgba(255,255,255,0.06)"
+          strokeWidth="0.5"
+        />
+      ))}
+      {/* Axis lines */}
+      {angles.map((a, i) => (
+        <line key={i} x1={cx} y1={cy} x2={cx + maxR * Math.cos(a)} y2={cy + maxR * Math.sin(a)} stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+      ))}
+      {/* Data polygon */}
+      <polygon
+        points={polyPoints(dims.map((d) => d.value))}
+        fill="rgba(99,102,241,0.15)"
+        stroke="url(#radarGrad)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      {/* Data dots */}
+      {dims.map((d, i) => {
+        const r = (d.value / 100) * maxR;
+        return <circle key={i} cx={cx + r * Math.cos(angles[i])} cy={cy + r * Math.sin(angles[i])} r="3" fill="#6366f1" stroke="#0a0a10" strokeWidth="1.5" />;
+      })}
+      {/* Labels */}
+      {dims.map((d, i) => {
+        const lr = maxR + 16;
+        const x = cx + lr * Math.cos(angles[i]);
+        const y = cy + lr * Math.sin(angles[i]);
+        return (
+          <text key={d.label} x={x} y={y} textAnchor="middle" dominantBaseline="middle" fill="#7c7c8a" fontSize="9" fontWeight="510">
+            {d.label}
+          </text>
+        );
+      })}
+      <defs>
+        <linearGradient id="radarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#6366f1" />
+          <stop offset="100%" stopColor="#3b82f6" />
+        </linearGradient>
+      </defs>
+    </svg>
   );
 }
 
@@ -204,7 +306,12 @@ export default function HomePage() {
               transition={{ duration: 0.7, ease }}
               className="mb-6"
             >
-              <img src="/mascots/group-1.png" alt="" className="w-40 sm:w-52 h-auto object-contain mx-auto" />
+              <div className="flex items-end justify-center gap-1">
+                <img src="/mascots/pose-sad.png" alt="" className="w-10 sm:w-13 object-contain" />
+                <img src="/mascots/pose-teardrop.png" alt="" className="w-11 sm:w-14 object-contain" />
+                <img src="/mascots/pose-wave.png" alt="" className="w-12 sm:w-15 object-contain" />
+                <img src="/mascots/pose-reach.png" alt="" className="w-11 sm:w-14 object-contain" />
+              </div>
             </motion.div>
 
             <motion.h1
@@ -267,54 +374,74 @@ export default function HomePage() {
       </section>
 
       {/* ═══ IQ Score Preview — gamification ═══ */}
-      <section className="py-12 sm:py-16 px-5 sm:px-6">
-        <div className="max-w-[960px] mx-auto">
+      <section className="relative py-12 sm:py-16 px-5 sm:px-6">
+        <div className="water-bg"><img src="/bg-water-3.png" alt="" /></div>
+        <div className="max-w-[960px] mx-auto relative">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} className="text-center mb-6">
+            <p className="text-accent text-[13px] font-[510] tracking-[0.08em] uppercase mb-2">Your cognitive profile</p>
+            <h2 className="text-[clamp(26px,5vw,36px)] font-[590] tracking-[-1px] leading-[1.1]">
+              Not just a number — a <span className="gradient-heading">5D portrait</span>
+            </h2>
+          </motion.div>
+
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            custom={0}
+            custom={1}
             onViewportEnter={() => iqCounter.start()}
-            className="glass-card p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 sm:gap-10"
+            className="glass-card p-6 sm:p-8"
           >
-            {/* Score */}
-            <div className="text-center shrink-0">
-              <p className="text-text-quaternary text-[11px] font-[510] tracking-[0.5px] uppercase mb-1">Example result</p>
-              <p className="text-[56px] sm:text-[72px] font-[590] tracking-[-3px] leading-none">
-                <span className="gradient-heading">{iqCounter.count}</span>
-              </p>
-              <p className="text-accent text-[13px] font-[510] mt-1">Top 4%</p>
-            </div>
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              {/* Left — Radar chart */}
+              <div className="flex-1 flex justify-center">
+                <RadarChart />
+              </div>
 
-            {/* Dimensions */}
-            <div className="flex-1 w-full space-y-3">
-              {[
-                { label: "Logic", value: 87, color: "#6366f1" },
-                { label: "Pattern", value: 74, color: "#818cf8" },
-                { label: "Verbal", value: 92, color: "#3b82f6" },
-                { label: "Math", value: 69, color: "#60a5fa" },
-                { label: "Spatial", value: 81, color: "#a78bfa" },
-              ].map((dim, i) => (
-                <div key={dim.label} className="flex items-center gap-3">
-                  <span className="text-[12px] font-[510] text-text-secondary w-14">{dim.label}</span>
-                  <div className="flex-1 h-2 bg-[rgba(255,255,255,0.04)] rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full rounded-full"
-                      style={{ background: dim.color }}
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${dim.value}%` }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.2 + 0.1 * i, duration: 0.8, ease: "easeOut" }}
-                    />
-                  </div>
-                  <span className="text-[11px] font-[510] text-text-quaternary w-7 text-right tabular-nums">{dim.value}</span>
+              {/* Right — Score + breakdown */}
+              <div className="flex-1 text-center md:text-left">
+                <p className="text-text-quaternary text-[11px] font-[510] tracking-[0.5px] uppercase mb-1">Example result</p>
+                <p className="text-[56px] sm:text-[72px] font-[590] tracking-[-3px] leading-none mb-1">
+                  <span className="gradient-heading">{iqCounter.count}</span>
+                </p>
+                <p className="text-accent text-[13px] font-[510] mb-5">Top 4% — smarter than 96% of users</p>
+
+                <div className="space-y-2.5">
+                  {[
+                    { label: "Logic", value: 87, color: "#6366f1" },
+                    { label: "Pattern", value: 74, color: "#818cf8" },
+                    { label: "Verbal", value: 92, color: "#3b82f6" },
+                    { label: "Math", value: 69, color: "#60a5fa" },
+                    { label: "Spatial", value: 81, color: "#a78bfa" },
+                  ].map((dim, i) => (
+                    <div key={dim.label} className="flex items-center gap-3">
+                      <span className="text-[12px] font-[510] text-text-secondary w-14">{dim.label}</span>
+                      <div className="flex-1 h-2 bg-[rgba(255,255,255,0.04)] rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-full"
+                          style={{ background: dim.color }}
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${dim.value}%` }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.2 + 0.1 * i, duration: 0.8, ease: "easeOut" }}
+                        />
+                      </div>
+                      <span className="text-[11px] font-[510] text-text-quaternary w-7 text-right tabular-nums">{dim.value}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
 
-            {/* Mascot */}
-            <img src="/mascots/thinking.png" alt="" className="w-20 sm:w-24 object-contain shrink-0 hidden sm:block" />
+            {/* Mascot poses row */}
+            <div className="flex justify-center items-end gap-4 mt-6 pt-5 border-t border-border-subtle">
+              <img src="/mascots/pose-wave.png" alt="" className="w-12 sm:w-14 object-contain" />
+              <img src="/mascots/pose-surf.png" alt="" className="w-14 sm:w-16 object-contain" />
+              <p className="text-text-tertiary text-[13px] max-w-[26ch] text-center">Every brain is unique. Find someone whose mind complements yours.</p>
+              <img src="/mascots/pose-reach.png" alt="" className="w-14 sm:w-16 object-contain" />
+              <img src="/mascots/pose-water.png" alt="" className="w-12 sm:w-14 object-contain" />
+            </div>
           </motion.div>
         </div>
       </section>
@@ -472,15 +599,18 @@ export default function HomePage() {
         <div className="water-bg"><img src="/bg-water-3.png" alt="" /></div>
 
         <div className="max-w-[960px] mx-auto relative text-center">
-          <motion.img
-            src="/mascots/group-2.png"
-            alt=""
-            className="w-48 sm:w-64 h-auto mx-auto object-contain mb-6"
+          <motion.div
+            className="flex items-end justify-center gap-2 mb-6"
             initial={{ opacity: 0, scale: 0.85 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease }}
-          />
+          >
+            <img src="/mascots/pose-surf.png" alt="" className="w-12 sm:w-16 object-contain" />
+            <img src="/mascots/pose-water.png" alt="" className="w-14 sm:w-18 object-contain" />
+            <img src="/mascots/pose-splash.png" alt="" className="w-16 sm:w-20 object-contain" />
+            <img src="/mascots/pose-fall.png" alt="" className="w-12 sm:w-16 object-contain" />
+          </motion.div>
 
           <motion.h2 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} className="text-[clamp(28px,6vw,44px)] font-[590] tracking-[-1.5px] leading-[1.05] mb-4">
             Ready to find out?
