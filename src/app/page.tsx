@@ -319,7 +319,10 @@ export default function HomePage() {
 
       {/* ═══ Hero ═══ */}
       <section className="relative pt-28 sm:pt-40 pb-12 sm:pb-20 px-5 sm:px-6">
-        <div className="max-w-[900px] mx-auto">
+        <div className="water-bg">
+          <img src="/bg-water-1.png" alt="" style={{ objectPosition: "center top" }} />
+        </div>
+        <div className="max-w-[900px] mx-auto relative">
           {/* Mobile: stacked, text first. Desktop: side by side */}
           <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-16">
             {/* Text */}
@@ -415,8 +418,11 @@ export default function HomePage() {
       </div>
 
       {/* ═══ Two pillars: IQ + Values ═══ */}
-      <section className="py-14 sm:py-20 px-5 sm:px-6">
-        <div className="max-w-[900px] mx-auto">
+      <section className="relative py-14 sm:py-20 px-5 sm:px-6">
+        <div className="water-bg">
+          <img src="/bg-water-2.png" alt="" style={{ objectPosition: "center center", transform: "rotate(180deg)" }} />
+        </div>
+        <div className="max-w-[900px] mx-auto relative">
           <motion.p
             variants={fadeUp}
             initial="hidden"
@@ -708,8 +714,11 @@ export default function HomePage() {
       </section>
 
       {/* ═══ CTA ═══ */}
-      <section className="py-14 sm:py-20 px-5 sm:px-6">
-        <div className="max-w-[900px] mx-auto">
+      <section className="relative py-14 sm:py-20 px-5 sm:px-6">
+        <div className="water-bg">
+          <img src="/bg-water-3.png" alt="" style={{ objectPosition: "right center" }} />
+        </div>
+        <div className="max-w-[900px] mx-auto relative">
           <div className="h-px bg-border mb-14 sm:mb-20" />
 
           <div className="text-center">
