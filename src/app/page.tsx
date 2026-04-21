@@ -16,29 +16,6 @@ const fadeUp = {
 };
 
 /* Animated counter hook */
-function useCounter(end: number, duration = 1500) {
-  const [count, setCount] = useState(0);
-  const [started, setStarted] = useState(false);
-
-  useEffect(() => {
-    if (!started) return;
-    let start = 0;
-    const step = end / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= end) {
-        setCount(end);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [started, end, duration]);
-
-  return { count, start: () => setStarted(true) };
-}
-
 function WavelengthLogo({ size = 28 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
@@ -85,7 +62,7 @@ function PhoneMockup() {
             <span style={{ fontSize: 10, fontWeight: 590, color: "#ededf0", letterSpacing: -0.3 }}>wavelength</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            <span style={{ fontSize: 9, fontWeight: 510, color: "#6366f1" }}>IQ 128</span>
+            <span style={{ fontSize: 9, fontWeight: 510, color: "#6366f1" }}>Cluster A</span>
             <img src="/mascots/pose-wave.png" alt="" style={{ width: 20, height: 20, objectFit: "contain" }} />
           </div>
         </div>
@@ -97,7 +74,7 @@ function PhoneMockup() {
               <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg, #6366f1, #3b82f6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 590, color: "white" }}>S</div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 11, fontWeight: 510, color: "#ededf0" }}>Sarah, 26</div>
-                <div style={{ fontSize: 8, color: "#6366f1", fontWeight: 510 }}>92% match · IQ 132</div>
+                <div style={{ fontSize: 8, color: "#6366f1", fontWeight: 510 }}>92% match · same cluster</div>
               </div>
               <img src="/mascots/pose-sad.png" alt="" style={{ width: 28, height: 28, objectFit: "contain", opacity: 0.7 }} />
             </div>
@@ -130,13 +107,13 @@ function PhoneMockup() {
             <div style={{ fontSize: 7, fontWeight: 510, color: "#55555f", marginBottom: 6 }}>Chat</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               <div style={{ alignSelf: "flex-start", background: "rgba(255,255,255,0.04)", borderRadius: "10px 10px 10px 3px", padding: "4px 8px", maxWidth: "80%" }}>
-                <span style={{ fontSize: 8, color: "#b4b4c0" }}>That logic puzzle was brutal 😅</span>
+                <span style={{ fontSize: 8, color: "#b4b4c0" }}>Finally someone who actually gets sarcasm 😅</span>
               </div>
               <div style={{ alignSelf: "flex-end", background: "rgba(99,102,241,0.15)", borderRadius: "10px 10px 3px 10px", padding: "4px 8px", maxWidth: "80%" }}>
-                <span style={{ fontSize: 8, color: "#c4c4ff" }}>Right?? I got stuck on the pattern ones</span>
+                <span style={{ fontSize: 8, color: "#c4c4ff" }}>Haha same wavelength I guess 😏</span>
               </div>
               <div style={{ alignSelf: "flex-start", background: "rgba(255,255,255,0.04)", borderRadius: "10px 10px 10px 3px", padding: "4px 8px", maxWidth: "80%" }}>
-                <span style={{ fontSize: 8, color: "#b4b4c0" }}>We should compare scores over coffee ☕</span>
+                <span style={{ fontSize: 8, color: "#b4b4c0" }}>Coffee this weekend? ☕</span>
               </div>
             </div>
           </div>
@@ -248,7 +225,6 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [activeValue, setActiveValue] = useState(0);
 
-  const iqCounter = useCounter(128, 1200);
 
   // Rotate through values examples
   useEffect(() => {
@@ -306,12 +282,7 @@ export default function HomePage() {
               transition={{ duration: 0.7, ease }}
               className="mb-6"
             >
-              <div className="flex items-end justify-center gap-1">
-                <img src="/mascots/pose-sad.png" alt="" className="w-10 sm:w-13 object-contain" />
-                <img src="/mascots/pose-teardrop.png" alt="" className="w-11 sm:w-14 object-contain" />
-                <img src="/mascots/pose-wave.png" alt="" className="w-12 sm:w-15 object-contain" />
-                <img src="/mascots/pose-reach.png" alt="" className="w-11 sm:w-14 object-contain" />
-              </div>
+              <img src="/mascots/pose-wave.png" alt="" className="w-24 sm:w-32 object-contain" />
             </motion.div>
 
             <motion.h1
@@ -331,7 +302,7 @@ export default function HomePage() {
               transition={{ delay: 0.2, duration: 0.6, ease }}
               className="text-text-tertiary text-[15px] sm:text-[16px] leading-[1.65] max-w-[38ch] mb-7"
             >
-              IQ test + dealbreaker values. Skip the awkward dates.
+              A quick cognitive test + dealbreaker values. Skip the awkward dates.
               Match with people who think like you <em>and</em> want the same things.
             </motion.p>
 
@@ -342,7 +313,7 @@ export default function HomePage() {
               className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto mb-5"
             >
               <Link href="/test" className="pulse-cta inline-flex items-center justify-center h-13 px-8 bg-gradient-to-r from-accent to-accent2 text-white text-[15px] font-[510] rounded-xl transition-all active:scale-[0.98]">
-                Find out your IQ — free
+                Take the test — free
               </Link>
               <a href="#waitlist" className="inline-flex items-center justify-center h-13 px-8 border border-border rounded-xl text-text-secondary text-[14px] font-[510] hover:text-foreground hover:border-text-quaternary transition-all">
                 Join the waitlist
@@ -365,8 +336,8 @@ export default function HomePage() {
               transition={{ delay: 0.3, duration: 0.9, ease }}
               className="relative"
             >
-              <img src="/mascots/curious.png" alt="" className="absolute -left-8 sm:-left-16 bottom-20 w-14 sm:w-20 object-contain z-10" />
-              <img src="/mascots/pointing.png" alt="" className="absolute -right-6 sm:-right-14 top-16 w-12 sm:w-18 object-contain z-10" style={{ transform: "scaleX(-1)" }} />
+              <img src="/mascots/curious.png" alt="" className="absolute -left-10 sm:-left-20 bottom-20 w-20 sm:w-28 object-contain z-10" />
+              <img src="/mascots/pointing.png" alt="" className="absolute -right-8 sm:-right-18 top-16 w-18 sm:w-24 object-contain z-10" style={{ transform: "scaleX(-1)" }} />
               <PhoneMockup />
             </motion.div>
           </div>
@@ -378,9 +349,9 @@ export default function HomePage() {
         <div className="water-bg"><img src="/bg-water-3.png" alt="" /></div>
         <div className="max-w-[960px] mx-auto relative">
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} className="text-center mb-6">
-            <p className="text-accent text-[13px] font-[510] tracking-[0.08em] uppercase mb-2">Your cognitive profile</p>
+            <p className="text-accent text-[13px] font-[510] tracking-[0.08em] uppercase mb-2">How matching works</p>
             <h2 className="text-[clamp(26px,5vw,36px)] font-[590] tracking-[-1px] leading-[1.1]">
-              Not just a number — a <span className="gradient-heading">5D portrait</span>
+              You only see people in your <span className="gradient-heading">cognitive cluster</span>
             </h2>
           </motion.div>
 
@@ -390,7 +361,6 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true }}
             custom={1}
-            onViewportEnter={() => iqCounter.start()}
             className="glass-card p-6 sm:p-8"
           >
             <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
@@ -399,13 +369,12 @@ export default function HomePage() {
                 <RadarChart />
               </div>
 
-              {/* Right — Score + breakdown */}
+              {/* Right — explanation + bars */}
               <div className="flex-1 text-center md:text-left">
-                <p className="text-text-quaternary text-[11px] font-[510] tracking-[0.5px] uppercase mb-1">Example result</p>
-                <p className="text-[56px] sm:text-[72px] font-[590] tracking-[-3px] leading-none mb-1">
-                  <span className="gradient-heading">{iqCounter.count}</span>
+                <p className="text-[18px] sm:text-[20px] font-[590] tracking-[-0.5px] mb-2">Your 5D cognitive profile</p>
+                <p className="text-text-tertiary text-[13px] sm:text-[14px] leading-[1.65] mb-5 max-w-[36ch]">
+                  40 questions measure five dimensions. You get placed in a cluster with people who think similarly — no scores shown, no ranking.
                 </p>
-                <p className="text-accent text-[13px] font-[510] mb-5">Top 4% — smarter than 96% of users</p>
 
                 <div className="space-y-2.5">
                   {[
@@ -427,20 +396,12 @@ export default function HomePage() {
                           transition={{ delay: 0.2 + 0.1 * i, duration: 0.8, ease: "easeOut" }}
                         />
                       </div>
-                      <span className="text-[11px] font-[510] text-text-quaternary w-7 text-right tabular-nums">{dim.value}</span>
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
 
-            {/* Mascot poses row */}
-            <div className="flex justify-center items-end gap-4 mt-6 pt-5 border-t border-border-subtle">
-              <img src="/mascots/pose-wave.png" alt="" className="w-12 sm:w-14 object-contain" />
-              <img src="/mascots/pose-surf.png" alt="" className="w-14 sm:w-16 object-contain" />
-              <p className="text-text-tertiary text-[13px] max-w-[26ch] text-center">Every brain is unique. Find someone whose mind complements yours.</p>
-              <img src="/mascots/pose-reach.png" alt="" className="w-14 sm:w-16 object-contain" />
-              <img src="/mascots/pose-water.png" alt="" className="w-12 sm:w-14 object-contain" />
+                <p className="text-text-quaternary text-[11px] mt-3">Example profile — your actual shape will be unique</p>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -599,24 +560,21 @@ export default function HomePage() {
         <div className="water-bg"><img src="/bg-water-3.png" alt="" /></div>
 
         <div className="max-w-[960px] mx-auto relative text-center">
-          <motion.div
-            className="flex items-end justify-center gap-2 mb-6"
+          <motion.img
+            src="/mascots/pose-splash.png"
+            alt=""
+            className="w-28 sm:w-36 h-auto mx-auto object-contain mb-6"
             initial={{ opacity: 0, scale: 0.85 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease }}
-          >
-            <img src="/mascots/pose-surf.png" alt="" className="w-12 sm:w-16 object-contain" />
-            <img src="/mascots/pose-water.png" alt="" className="w-14 sm:w-18 object-contain" />
-            <img src="/mascots/pose-splash.png" alt="" className="w-16 sm:w-20 object-contain" />
-            <img src="/mascots/pose-fall.png" alt="" className="w-12 sm:w-16 object-contain" />
-          </motion.div>
+          />
 
           <motion.h2 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} className="text-[clamp(28px,6vw,44px)] font-[590] tracking-[-1.5px] leading-[1.05] mb-4">
             Ready to find out?
           </motion.h2>
           <motion.p variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1} className="text-text-tertiary text-[15px] mb-7 max-w-sm mx-auto">
-            40 IQ questions. 16 values. ~15 min. Free forever.
+            40 cognitive questions. 16 values. ~15 min. Free forever.
           </motion.p>
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}>
             <Link href="/test" className="pulse-cta inline-flex items-center justify-center h-13 px-10 bg-gradient-to-r from-accent to-accent2 text-white text-[16px] font-[510] rounded-xl transition-all active:scale-[0.98]">
