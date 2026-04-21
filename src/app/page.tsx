@@ -56,89 +56,120 @@ function WaveSVG() {
 
 function PhoneMockup() {
   return (
-    <div className="phone-frame">
-      <div className="phone-screen flex flex-col">
+    // @ts-expect-error -- telephone web component
+    <iphone-16-max mode="dark" style={{ '--width': '280px' }}>
+      <div style={{
+        width: '100%',
+        height: '100%',
+        background: '#0a0a10',
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: 'var(--font-inter), system-ui, sans-serif',
+      }}>
         {/* Status bar */}
-        <div className="flex items-center justify-between px-6 pt-14 pb-3">
-          <span className="text-[10px] font-[510] text-text-quaternary">wavelength</span>
-          <span className="text-[10px] font-[510] text-accent">IQ 128</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '56px 24px 12px' }}>
+          <span style={{ fontSize: 10, fontWeight: 510, color: '#55555f' }}>wavelength</span>
+          <span style={{ fontSize: 10, fontWeight: 510, color: '#6366f1' }}>IQ 128</span>
         </div>
 
         {/* Profile card */}
-        <div className="px-4 flex-1">
-          <div className="glass-card p-4 mb-3">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-accent to-accent2 flex items-center justify-center text-[14px] font-[590] text-white">
-                S
-              </div>
+        <div style={{ padding: '0 16px', flex: 1 }}>
+          <div style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.06)',
+            borderRadius: 16,
+            padding: 16,
+            marginBottom: 12,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+              <div style={{
+                width: 44, height: 44, borderRadius: '50%',
+                background: 'linear-gradient(135deg, #6366f1, #3b82f6)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 14, fontWeight: 590, color: 'white',
+              }}>S</div>
               <div>
-                <div className="text-[13px] font-[510] text-foreground">Sarah, 26</div>
-                <div className="text-[10px] text-text-quaternary">92% match</div>
+                <div style={{ fontSize: 13, fontWeight: 510, color: '#ededf0' }}>Sarah, 26</div>
+                <div style={{ fontSize: 10, color: '#55555f' }}>92% match</div>
               </div>
-              <div className="ml-auto">
-                <div className="text-[18px] font-[510] text-accent tabular-nums">132</div>
-                <div className="text-[9px] text-text-quaternary text-right">IQ</div>
+              <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
+                <div style={{ fontSize: 18, fontWeight: 510, color: '#6366f1' }}>132</div>
+                <div style={{ fontSize: 9, color: '#55555f' }}>IQ</div>
               </div>
             </div>
 
-            {/* Mini dimension bars */}
-            <div className="space-y-2">
-              {DIMENSIONS.map((d) => (
-                <div key={d.label} className="flex items-center gap-2">
-                  <span className="text-[9px] font-[510] text-text-quaternary w-10">{d.label}</span>
-                  <div className="flex-1 h-[3px] bg-[rgba(255,255,255,0.04)] rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full rounded-full"
-                      style={{ background: d.color }}
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${d.value}%` }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
-                    />
-                  </div>
+            {/* Dimension bars */}
+            {[
+              { label: "Logic", value: 87, color: "#6366f1" },
+              { label: "Pattern", value: 74, color: "#818cf8" },
+              { label: "Verbal", value: 92, color: "#3b82f6" },
+              { label: "Math", value: 69, color: "#60a5fa" },
+              { label: "Spatial", value: 81, color: "#a78bfa" },
+            ].map((d) => (
+              <div key={d.label} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                <span style={{ fontSize: 9, fontWeight: 510, color: '#55555f', width: 40 }}>{d.label}</span>
+                <div style={{ flex: 1, height: 3, background: 'rgba(255,255,255,0.04)', borderRadius: 2, overflow: 'hidden' }}>
+                  <div style={{ width: `${d.value}%`, height: '100%', background: d.color, borderRadius: 2 }} />
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
 
-          {/* Values tags */}
-          <div className="glass-card p-3 mb-3">
-            <div className="text-[9px] font-[510] text-text-quaternary mb-2">Shared values</div>
-            <div className="flex flex-wrap gap-1">
+          {/* Values */}
+          <div style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.06)',
+            borderRadius: 16,
+            padding: 12,
+            marginBottom: 12,
+          }}>
+            <div style={{ fontSize: 9, fontWeight: 510, color: '#55555f', marginBottom: 8 }}>Shared values</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
               {["Deep thinker", "Night owl", "No kids", "Ambitious"].map((t) => (
-                <span
-                  key={t}
-                  className="text-[9px] font-[510] px-2 py-0.5 rounded-full bg-accent/[0.08] text-accent/80 border border-accent/10"
-                >
-                  {t}
-                </span>
+                <span key={t} style={{
+                  fontSize: 9, fontWeight: 510, padding: '2px 8px',
+                  borderRadius: 100, background: 'rgba(99,102,241,0.08)',
+                  color: 'rgba(99,102,241,0.8)', border: '1px solid rgba(99,102,241,0.1)',
+                }}>{t}</span>
               ))}
             </div>
           </div>
 
-          {/* Action button */}
-          <div className="rounded-xl bg-gradient-to-r from-accent to-accent2 p-[1px]">
-            <div className="rounded-[11px] bg-[#0c0c10] px-4 py-2.5 text-center">
-              <span className="text-[11px] font-[510] bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent">
-                Connect
-              </span>
+          {/* Connect button */}
+          <div style={{
+            borderRadius: 12,
+            background: 'linear-gradient(90deg, #6366f1, #3b82f6)',
+            padding: 1,
+          }}>
+            <div style={{
+              borderRadius: 11, background: '#0c0c10',
+              padding: '10px 16px', textAlign: 'center',
+            }}>
+              <span style={{
+                fontSize: 11, fontWeight: 510,
+                background: 'linear-gradient(90deg, #6366f1, #3b82f6)',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              }}>Connect</span>
             </div>
           </div>
         </div>
 
         {/* Bottom nav */}
-        <div className="flex items-center justify-around px-6 py-4 border-t border-[rgba(255,255,255,0.04)]">
+        <div style={{
+          display: 'flex', justifyContent: 'space-around',
+          padding: '16px 24px',
+          borderTop: '1px solid rgba(255,255,255,0.04)',
+        }}>
           {["Discover", "Matches", "Profile"].map((tab, i) => (
-            <span
-              key={tab}
-              className={`text-[9px] font-[510] ${i === 0 ? "text-accent" : "text-text-quaternary"}`}
-            >
-              {tab}
-            </span>
+            <span key={tab} style={{
+              fontSize: 9, fontWeight: 510,
+              color: i === 0 ? '#6366f1' : '#55555f',
+            }}>{tab}</span>
           ))}
         </div>
       </div>
-    </div>
+    // @ts-expect-error -- telephone web component
+    </iphone-16-max>
   );
 }
 

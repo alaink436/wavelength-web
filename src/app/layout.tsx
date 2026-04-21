@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="min-h-screen bg-background text-foreground font-sans antialiased">
         {children}
+        <Script src="https://cdn.jsdelivr.net/npm/@sneas/telephone@1/iphone-16-max.js" strategy="afterInteractive" />
       </body>
     </html>
   );
