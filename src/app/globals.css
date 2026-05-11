@@ -72,16 +72,33 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Subtle ambient gradient, used sparingly */
-.ambient-bg {
+/* Ambient gradients — varied intensity per section */
+.ambient-soft {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 40% at 50% 0%, oklch(0.72 0.16 245 / 0.06), transparent 70%);
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, oklch(0.72 0.16 245 / 0.05), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.ambient-medium {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 45% 30% at 30% 20%, oklch(0.72 0.16 245 / 0.12), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, oklch(0.62 0.20 250 / 0.08), transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+.ambient-heavy {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 50%, oklch(0.72 0.16 245 / 0.18), transparent 60%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Water texture (matches app brand), restrained */
+/* Water texture — varied opacity per section */
 .water-bg {
   position: absolute;
   inset: 0;
@@ -96,7 +113,53 @@ html {
   object-fit: cover;
   filter: invert(1) hue-rotate(195deg) saturate(0.6);
   mix-blend-mode: screen;
-  opacity: 0.05;
+}
+.water-bg.soft img    { opacity: 0.04; }
+.water-bg.medium img  { opacity: 0.08; }
+.water-bg.heavy img   { opacity: 0.13; filter: invert(1) hue-rotate(195deg) saturate(0.9); }
+
+/* Glass surfaces — three intensities for purposeful contrast */
+.glass-soft {
+  background: oklch(0.18 0.012 250 / 0.4);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid oklch(0.95 0.005 250 / 0.06);
+  border-radius: 20px;
+}
+
+.glass-medium {
+  background: oklch(0.16 0.012 250 / 0.55);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid oklch(0.95 0.005 250 / 0.08);
+  border-radius: 24px;
+  box-shadow:
+    0 1px 0 0 oklch(0.95 0.005 250 / 0.05) inset,
+    0 32px 64px -32px oklch(0.06 0.012 250 / 0.6);
+}
+
+.glass-heavy {
+  background:
+    linear-gradient(135deg, oklch(0.72 0.16 245 / 0.10), oklch(0.62 0.20 250 / 0.04)),
+    oklch(0.14 0.012 250 / 0.65);
+  backdrop-filter: blur(40px) saturate(160%);
+  -webkit-backdrop-filter: blur(40px) saturate(160%);
+  border: 1px solid oklch(0.72 0.16 245 / 0.18);
+  border-radius: 28px;
+  box-shadow:
+    0 1px 0 0 oklch(0.95 0.005 250 / 0.08) inset,
+    0 0 0 1px oklch(0.72 0.16 245 / 0.04),
+    0 40px 80px -20px oklch(0.62 0.20 250 / 0.25);
+}
+
+/* Diffuse accent glow — pairs with glass blocks */
+.accent-glow {
+  position: absolute;
+  border-radius: 50%;
+  background: oklch(0.72 0.16 245 / 0.35);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Section numbering — replaces card-icon pattern */

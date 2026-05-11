@@ -254,10 +254,11 @@ export default function HomePage() {
 
       {/* ── Hero — asymmetric, copy-led */}
       <section className="relative pt-32 sm:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 overflow-hidden">
-        <div className="water-bg">
+        <div className="water-bg medium">
           <img src="/bg-water-1.png" alt="" />
         </div>
-        <div className="ambient-bg" />
+        <div className="ambient-medium" />
+        <div className="accent-glow" style={{ width: 460, height: 460, top: -120, right: -100 }} />
 
         <div className="max-w-[1180px] mx-auto relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-14 items-end">
@@ -386,19 +387,20 @@ export default function HomePage() {
                 Tage warten.
               </motion.p>
             </div>
-            <div className="lg:col-span-3 lg:col-start-10">
+            <div className="lg:col-span-3 lg:col-start-10 relative">
+              <div className="accent-glow" style={{ width: 280, height: 280, top: -40, left: -60 }} />
               <motion.div
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 custom={2}
-                className="border-t border-[var(--border)] pt-4"
+                className="glass-heavy p-7 relative"
               >
                 <div
                   style={{
                     fontFamily: "var(--font-bricolage)",
-                    fontSize: 56,
+                    fontSize: 64,
                     fontWeight: 700,
                     lineHeight: 1,
                     letterSpacing: "-0.04em",
@@ -407,7 +409,7 @@ export default function HomePage() {
                 >
                   4s
                 </div>
-                <div className="text-[12px] text-[var(--text-tertiary)] mt-2 font-medium tracking-tight uppercase">
+                <div className="text-[11px] text-[var(--text-tertiary)] mt-3 font-medium tracking-tight uppercase">
                   Median auf 14 Member
                 </div>
               </motion.div>
@@ -418,9 +420,10 @@ export default function HomePage() {
 
       {/* ── Coach-Tools, list-style — no card grid */}
       <section className="relative py-24 sm:py-36 px-6 sm:px-8 overflow-hidden">
-        <div className="water-bg">
+        <div className="water-bg soft">
           <img src="/bg-water-2.png" alt="" />
         </div>
+        <div className="ambient-soft" />
         <div className="max-w-[1180px] mx-auto relative">
           <motion.div
             variants={fadeUp}
@@ -460,7 +463,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true }}
             custom={1}
-            className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-5 mb-16 max-w-[760px]"
+            className="glass-soft p-7 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-5 mb-16 max-w-[820px]"
           >
             {[
               ["Football", "11"],
@@ -472,7 +475,7 @@ export default function HomePage() {
               ["Badminton", "2"],
               ["Running", "1"],
             ].map(([sport, n]) => (
-              <li key={sport} className="flex items-baseline gap-2 border-b border-[var(--border-subtle)] pb-3">
+              <li key={sport} className="flex items-baseline gap-2 border-b border-[var(--border-subtle)] pb-3 last:border-0">
                 <span
                   style={{
                     fontFamily: "var(--font-bricolage)",
@@ -524,7 +527,9 @@ export default function HomePage() {
 
       {/* ── For friend groups */}
       <section className="relative py-24 sm:py-36 px-6 sm:px-8 overflow-hidden">
-        <div className="max-w-[1180px] mx-auto">
+        <div className="ambient-medium" />
+        <div className="accent-glow" style={{ width: 380, height: 380, bottom: -100, right: -80 }} />
+        <div className="max-w-[1180px] mx-auto relative">
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -555,7 +560,7 @@ export default function HomePage() {
               </p>
 
               {/* Heatmap visualization */}
-              <div className="flex items-stretch gap-1 max-w-[480px]">
+              <div className="glass-medium p-6 flex items-stretch gap-1 max-w-[520px]">
                 {[
                   [0.1, 0.2, 0.3, 0.5, 0.7, 0.4, 0.2],
                   [0.2, 0.3, 0.4, 0.7, 0.9, 0.6, 0.3],
@@ -588,7 +593,8 @@ export default function HomePage() {
 
       {/* ── App mode chooser teaser */}
       <section className="relative py-20 sm:py-28 px-6 sm:px-8 overflow-hidden border-t border-[var(--border-subtle)]">
-        <div className="max-w-[1180px] mx-auto">
+        <div className="ambient-soft" />
+        <div className="max-w-[1180px] mx-auto relative">
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -620,9 +626,11 @@ export default function HomePage() {
 
       {/* ── Final CTA */}
       <section className="relative py-28 sm:py-36 px-6 sm:px-8 overflow-hidden">
-        <div className="water-bg">
+        <div className="water-bg heavy">
           <img src="/bg-water-3.png" alt="" />
         </div>
+        <div className="ambient-heavy" />
+        <div className="accent-glow" style={{ width: 560, height: 560, top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
         <div className="max-w-[760px] mx-auto relative">
           <motion.h2
             variants={fadeUp}
