@@ -22,12 +22,12 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  title: "Wavelength — Date smarter.",
+  title: "On Wavelength — Plan smarter, together.",
   description:
-    "The dating app that matches you by how you think. Take the IQ test, discover your cognitive profile, and meet people on your wavelength.",
+    "Der Kalender für Freundeskreise und Sport-Teams. Termine per Heatmap-Voting finden, Trainings mit Lineup planen, Live-Attendance tracken. iOS + Android.",
   openGraph: {
-    title: "Wavelength — Date smarter.",
-    description: "The dating app that matches you by how you think.",
+    title: "On Wavelength — Plan smarter, together.",
+    description: "Der Kalender für Freundeskreise und Sport-Teams.",
     type: "website",
   },
 };
