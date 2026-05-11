@@ -78,6 +78,24 @@ html {
   z-index: 0;
 }
 
+/* Water texture background (matches app's "wavelength" brand identity) */
+.water-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.water-bg img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: invert(1) hue-rotate(195deg) saturate(0.7);
+  mix-blend-mode: screen;
+  opacity: 0.08;
+}
+
 /* CTA pulse */
 @keyframes pulseGlow {
   0%, 100% { box-shadow: 0 0 24px rgba(59, 130, 246, 0.2); }

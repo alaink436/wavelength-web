@@ -260,6 +260,9 @@ export default function HomePage() {
 
       {/* ═══ Hero ═══ */}
       <section className="relative pt-28 sm:pt-32 pb-12 sm:pb-20 px-5 sm:px-6 overflow-hidden">
+        <div className="water-bg">
+          <img src="/bg-water-1.png" alt="" />
+        </div>
         <div className="ambient-bg" />
 
         <div className="max-w-[1100px] mx-auto relative grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -336,8 +339,11 @@ export default function HomePage() {
       </section>
 
       {/* ═══ Features ═══ */}
-      <section className="relative py-16 sm:py-24 px-5 sm:px-6">
-        <div className="max-w-[1100px] mx-auto">
+      <section className="relative py-16 sm:py-24 px-5 sm:px-6 overflow-hidden">
+        <div className="water-bg">
+          <img src="/bg-water-2.png" alt="" />
+        </div>
+        <div className="max-w-[1100px] mx-auto relative">
           <motion.h2
             variants={fadeUp}
             initial="hidden"
@@ -486,6 +492,9 @@ export default function HomePage() {
 
       {/* ═══ Final CTA ═══ */}
       <section className="relative py-20 sm:py-28 px-5 sm:px-6 overflow-hidden">
+        <div className="water-bg">
+          <img src="/bg-water-3.png" alt="" />
+        </div>
         <div className="ambient-bg" />
         <div className="max-w-[600px] mx-auto relative text-center">
           <motion.h2
