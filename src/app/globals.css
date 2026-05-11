@@ -1,26 +1,30 @@
 @import "tailwindcss";
 
-/* On Wavelength — Design tokens (mirror of Thinq/constants/colors.ts dark mode) */
+/* On Wavelength — perceptually uniform tokens (OKLCH), tinted toward brand hue */
 :root {
-  --background: #06080E;
-  --surface: #15171E;
-  --surface-elevated: #23252C;
+  /* Backgrounds, deepest first. All neutrals tinted ~250 deg toward brand blue. */
+  --background:        oklch(0.13 0.012 250);   /* #06080E equiv */
+  --surface:           oklch(0.18 0.012 250);
+  --surface-elevated:  oklch(0.23 0.014 250);
 
-  --foreground: #F2F4F8;
-  --text-secondary: #9B9DA6;
-  --text-tertiary: #5E6068;
-  --text-quaternary: #3F4148;
+  /* Foregrounds */
+  --foreground:        oklch(0.95 0.005 250);
+  --text-secondary:    oklch(0.68 0.012 250);
+  --text-tertiary:     oklch(0.46 0.012 250);
+  --text-quaternary:   oklch(0.32 0.012 250);
 
-  --accent: #60A5FA;
-  --accent-dark: #3B82F6;
-  --accent-light: #93C5FD;
-  --accent-muted: rgba(96, 165, 250, 0.12);
+  /* Brand */
+  --accent:            oklch(0.72 0.16 245);
+  --accent-dark:       oklch(0.62 0.20 250);
+  --accent-light:      oklch(0.82 0.10 240);
+  --accent-muted:      oklch(0.72 0.16 245 / 0.12);
 
-  --border: #1F2128;
-  --border-subtle: rgba(255, 255, 255, 0.04);
+  /* Lines */
+  --border:            oklch(0.22 0.012 250);
+  --border-subtle:     oklch(0.18 0.008 250);
 
-  --error: #FF6B6B;
-  --success: #34D399;
+  --error:             oklch(0.70 0.18 25);
+  --success:           oklch(0.74 0.15 155);
 }
 
 @theme inline {
@@ -43,42 +47,41 @@
   --font-display: var(--font-bricolage);
 }
 
+/* 4pt spacing scale, semantic names */
+:root {
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+  --space-4xl: 64px;
+  --space-5xl: 96px;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
-  font-feature-settings: "cv01", "ss03";
+  font-feature-settings: "ss03", "cv11";
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Gradient text */
-.gradient-heading {
-  background: linear-gradient(135deg, var(--foreground) 0%, var(--accent-light) 50%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Glass card */
-.glass-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-}
-
-/* Subtle ambient gradient */
+/* Subtle ambient gradient, used sparingly */
 .ambient-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(96, 165, 250, 0.08), transparent 60%);
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, oklch(0.72 0.16 245 / 0.06), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Water texture background (matches app's "wavelength" brand identity) */
+/* Water texture (matches app brand), restrained */
 .water-bg {
   position: absolute;
   inset: 0;
@@ -91,34 +94,26 @@ html {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: invert(1) hue-rotate(195deg) saturate(0.7);
+  filter: invert(1) hue-rotate(195deg) saturate(0.6);
   mix-blend-mode: screen;
-  opacity: 0.08;
+  opacity: 0.05;
 }
 
-/* CTA pulse */
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 24px rgba(59, 130, 246, 0.2); }
-  50% { box-shadow: 0 0 48px rgba(59, 130, 246, 0.45), 0 0 80px rgba(96, 165, 250, 0.15); }
-}
-.pulse-cta {
-  animation: pulseGlow 3s ease-in-out infinite;
+/* Section numbering — replaces card-icon pattern */
+.section-num {
+  font-family: var(--font-bricolage), system-ui;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--text-tertiary);
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--background); }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: oklch(0.30 0.012 250); border-radius: 3px; }
 
 ::selection {
-  background: rgba(96, 165, 250, 0.3);
+  background: oklch(0.72 0.16 245 / 0.3);
   color: var(--foreground);
 }
-
-/* Heatmap cell gradient */
-.heat-0 { background: var(--border); }
-.heat-1 { background: #1E3A5F; }
-.heat-2 { background: #1E4D8C; }
-.heat-3 { background: #2563EB; }
-.heat-4 { background: #60A5FA; }
-.heat-5 { background: #93C5FD; }
