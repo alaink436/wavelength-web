@@ -1,21 +1,30 @@
-// Affiliate setup form for influencers who said "yes" to the partnership.
+// Wavelength affiliate onboarding — unified Klar public-site look. Loads
+// the influencer row from our own Supabase via anon-key, then hands off to
+// the shared OnboardingShell (mirrored from klar/_shared). The completion
+// POST goes to getklar.org/api/affiliate/complete which (a) calls our own
+// complete_influencer_setup RPC with service-role from the klar admin
+// registry, (b) logs the click-through agreement in anime-vault and (c)
+// fires the confirmation email via Brevo.
 
 import { use } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { SetupFormClient } from "./SetupFormClient";
-import { t, fill, isLang } from "./translations";
+import { SetupClient } from "./SetupClient";
+import "../_shared/affiliate-onboarding.css";
 
-const T = {
-  bg: "#06080E",
-  surface: "#15171E",
-  text: "#F2F4F8",
-  textSecondary: "#9B9DA6",
-  border: "#1F2128",
-  accent: "#60A5FA",
-};
-const CONTACT_EMAIL = "alain@onwavelength.space";
+export const dynamic = "force-dynamic";
 
-async function loadInfluencer(token: string) {
+interface Influencer {
+  id: string;
+  handle: string;
+  display_name: string | null;
+  status: string;
+  share_pct: number;
+  share_months: number;
+  language: string;
+  setup_token_expires_at: string | null;
+}
+
+async function loadInfluencer(token: string): Promise<Influencer | null> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return null;
@@ -29,76 +38,34 @@ async function loadInfluencer(token: string) {
 
   if (error || !data) return null;
   if (data.setup_token_expires_at && new Date(data.setup_token_expires_at) < new Date()) return null;
-  return data;
+  return data as Influencer;
 }
 
-export default function AffiliateSetupPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ token: string }>;
-  searchParams: Promise<{ lang?: string }>;
-}) {
+export default function AffiliateSetupPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = use(params);
-  const sp = use(searchParams);
   const data = use(loadInfluencer(token));
-  const lang = isLang(sp.lang) ? sp.lang : isLang(data?.language) ? data!.language : "de";
-  const tt = t(lang);
 
-  if (!data) return <Status title={tt.expired_title} body={fill(tt.expired_body, { email: CONTACT_EMAIL })} />;
-  if (data.status === "active") {
-    return <Status title={tt.expired_title /* reuse style */} body={fill(tt.contact_help, { email: CONTACT_EMAIL })} alreadyDoneHandle={data.handle} />;
-  }
-
-  return (
-    <SetupFormClient
-      token={token}
-      handle={data.handle}
-      displayName={data.display_name ?? ""}
-      sharePct={data.share_pct}
-      shareMonths={data.share_months}
-      lang={lang}
-    />
-  );
+  if (!data) return <Status expired />;
+  if (data.status === "active") return <Status alreadyDoneHandle={data.handle} />;
+  return <SetupClient token={token} handle={data.handle} displayName={data.display_name ?? ""} />;
 }
 
-function Status({ title, body, alreadyDoneHandle }: { title: string; body: string; alreadyDoneHandle?: string }) {
+function Status({ alreadyDoneHandle, expired }: { alreadyDoneHandle?: string; expired?: boolean }) {
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: T.bg,
-        color: T.text,
-        fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
-        padding: 24,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 440,
-          textAlign: "center",
-          background: T.surface,
-          border: `1px solid ${T.border}`,
-          borderRadius: 24,
-          padding: "40px 28px",
-        }}
-      >
-        <h1
-          style={{
-            fontFamily: "var(--font-bricolage), system-ui",
-            fontSize: 28,
-            fontWeight: 700,
-            margin: "0 0 12px",
-            letterSpacing: -0.8,
-            color: T.text,
-          }}
-        >
-          {alreadyDoneHandle ? `@${alreadyDoneHandle} ✓` : title}
-        </h1>
-        <p style={{ fontSize: 15, color: T.textSecondary, margin: 0, lineHeight: 1.55 }}>{body}</p>
+    <main className="aff-stage">
+      <div className="aff-shell" style={{ maxWidth: 440 }}>
+        <div className="aff-card aff-pad" style={{ textAlign: "center" }}>
+          <h1 className="aff-h1" style={{ marginBottom: 12 }}>
+            {alreadyDoneHandle ? <>@{alreadyDoneHandle} <span className="italic">✓</span></> : expired ? <>Link <span className="italic">abgelaufen</span></> : <span className="italic">Lade …</span>}
+          </h1>
+          <p className="aff-lede" style={{ textAlign: "center" }}>
+            {alreadyDoneHandle
+              ? "Du bist bereits als Affiliate eingerichtet. Bei Fragen: alain@onwavelength.space"
+              : expired
+              ? "Dein Onboarding-Link ist abgelaufen oder ungültig. Schreib uns kurz an alain@onwavelength.space, wir erneuern ihn."
+              : ""}
+          </p>
+        </div>
       </div>
     </main>
   );
