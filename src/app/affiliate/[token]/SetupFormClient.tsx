@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { t, fill, type Lang } from "./translations";
 
 const T = {
   bg: "#06080E",
@@ -14,23 +15,21 @@ const T = {
   accentDark: "#3B82F6",
   border: "#1F2128",
   error: "#FF6B6B",
-  success: "#34D399",
 };
 
-// 12 ISO-2 country codes covering the main markets; "OTHER" stays open.
 const COUNTRIES: { code: string; label: string }[] = [
-  { code: "DE", label: "Deutschland" },
-  { code: "AT", label: "Österreich" },
-  { code: "CH", label: "Schweiz" },
-  { code: "NL", label: "Niederlande" },
-  { code: "FR", label: "Frankreich" },
-  { code: "IT", label: "Italien" },
-  { code: "ES", label: "Spanien" },
+  { code: "DE", label: "Deutschland / Germany" },
+  { code: "AT", label: "Österreich / Austria" },
+  { code: "CH", label: "Schweiz / Switzerland" },
+  { code: "NL", label: "Nederland / Netherlands" },
+  { code: "FR", label: "France" },
+  { code: "IT", label: "Italia / Italy" },
+  { code: "ES", label: "España / Spain" },
   { code: "UK", label: "United Kingdom" },
   { code: "US", label: "USA" },
   { code: "CA", label: "Canada" },
   { code: "AU", label: "Australia" },
-  { code: "OTHER", label: "Anderes Land" },
+  { code: "OTHER", label: "Other / Anderes Land" },
 ];
 
 type PayoutMethod = "wise" | "paypal" | "sepa";
@@ -42,13 +41,16 @@ export function SetupFormClient({
   displayName,
   sharePct,
   shareMonths,
+  lang,
 }: {
   token: string;
   handle: string;
   displayName: string;
   sharePct: number;
   shareMonths: number;
+  lang: Lang;
 }) {
+  const tt = t(lang);
   const [name, setName] = useState(displayName);
   const [country, setCountry] = useState("DE");
   const [method, setMethod] = useState<PayoutMethod>("paypal");
@@ -60,23 +62,13 @@ export function SetupFormClient({
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<{ promoCode: string } | null>(null);
 
-  // Country gates the tax-status options. Foreign = US/CA/AU/UK.
   const isForeign = ["US", "CA", "AU", "UK"].includes(country);
 
   async function submit() {
     setError(null);
-    if (!name.trim()) {
-      setError("Bitte gib einen Namen an.");
-      return;
-    }
-    if (method === "sepa" && !iban.trim()) {
-      setError("Für SEPA brauche ich deine IBAN.");
-      return;
-    }
-    if ((method === "paypal" || method === "wise") && !email.trim()) {
-      setError("Bitte gib die Auszahlungs-Email an.");
-      return;
-    }
+    if (!name.trim()) return setError(tt.err_name_required);
+    if (method === "sepa" && !iban.trim()) return setError(tt.err_iban_required);
+    if ((method === "paypal" || method === "wise") && !email.trim()) return setError(tt.err_email_required);
 
     setBusy(true);
     try {
@@ -84,29 +76,27 @@ export function SetupFormClient({
       const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
       const supabase = createClient(url, key);
 
-      // Promo code: HANDLE in uppercase + numeric "20" suffix (20% audience discount).
       const promoCode = (handle.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 12) || "WAVE") + "20";
 
-      const { error } = await supabase
-        .from("influencers")
-        .update({
-          display_name: name.trim(),
-          country,
-          payout_method: method,
-          payout_email: method === "sepa" ? null : email.trim(),
-          payout_iban: method === "sepa" ? iban.trim() : null,
-          tax_status: isForeign ? "foreign" : taxStatus,
-          invoice_capable: invoiceCapable,
-          promo_code: promoCode,
-          status: "active",
-          activated_at: new Date().toISOString(),
-        })
-        .eq("setup_token", token);
+      // Call the complete_influencer_setup RPC — server validates the token,
+      // pins the writable columns, no anon-UPDATE policy needed.
+      const { data: updated, error } = await supabase.rpc("complete_influencer_setup", {
+        p_token: token,
+        p_display_name: name.trim(),
+        p_country: country,
+        p_payout_method: method,
+        p_payout_email: method === "sepa" ? null : email.trim() || null,
+        p_payout_iban: method === "sepa" ? iban.trim() : null,
+        p_tax_status: isForeign ? "foreign" : taxStatus,
+        p_invoice_capable: invoiceCapable,
+        p_promo_code: promoCode,
+      });
 
       if (error) throw error;
-      setDone({ promoCode });
+      const finalCode = ((updated as { promo_code?: string } | null)?.promo_code) || promoCode;
+      setDone({ promoCode: finalCode });
     } catch (e: any) {
-      setError(e?.message ?? "Etwas ging schief. Versuch's nochmal.");
+      setError(e?.message ?? tt.err_generic);
     } finally {
       setBusy(false);
     }
@@ -116,10 +106,8 @@ export function SetupFormClient({
     return (
       <main style={pageStyle()}>
         <div style={cardStyle()}>
-          <h1 style={h1Style()}>Du bist drin.</h1>
-          <p style={{ fontSize: 15, color: T.textSecondary, lineHeight: 1.55, marginTop: 8 }}>
-            Dein Promo-Code für deine Audience:
-          </p>
+          <h1 style={h1Style()}>{tt.done_title}</h1>
+          <p style={{ fontSize: 15, color: T.textSecondary, lineHeight: 1.55, marginTop: 8 }}>{tt.done_body}</p>
           <div
             style={{
               marginTop: 14,
@@ -137,12 +125,10 @@ export function SetupFormClient({
             {done.promoCode}
           </div>
           <p style={{ fontSize: 13, color: T.textTertiary, marginTop: 14, lineHeight: 1.6 }}>
-            Deine Audience bekommt 20% Rabatt auf den ersten Monat, du bekommst {sharePct}%
-            Lifetime-Share für {shareMonths} Monate auf jeden Sub, der über deinen Code kommt.
-            Auszahlung jeden Monatsanfang.
+            {fill(tt.done_share_explainer, { sharePct, shareMonths })}
           </p>
           <p style={{ fontSize: 13, color: T.textTertiary, marginTop: 18 }}>
-            Dein Tracking-Link:
+            {tt.done_tracking_label}:
             <br />
             <code
               style={{
@@ -182,23 +168,16 @@ export function SetupFormClient({
             marginBottom: 12,
           }}
         >
-          On Wavelength · Affiliate
+          On Wavelength · {tt.tag}
         </div>
-        <h1 style={h1Style()}>Willkommen, @{handle}.</h1>
-        <p style={{ fontSize: 15, color: T.textSecondary, lineHeight: 1.55, margin: "8px 0 24px" }}>
-          Letzte Daten für die Auszahlung, dann bist du drin. Dauert eine Minute.
-        </p>
+        <h1 style={h1Style()}>{fill(tt.welcome_title, { handle })}</h1>
+        <p style={{ fontSize: 15, color: T.textSecondary, lineHeight: 1.55, margin: "8px 0 24px" }}>{tt.welcome_body}</p>
 
-        <Field label="Dein Name (für Rechnungen)">
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Marie Schmidt"
-            style={inputStyle()}
-          />
+        <Field label={tt.field_name_label}>
+          <input value={name} onChange={(e) => setName(e.target.value)} placeholder={tt.field_name_placeholder} style={inputStyle()} />
         </Field>
 
-        <Field label="Land">
+        <Field label={tt.field_country_label}>
           <select value={country} onChange={(e) => setCountry(e.target.value)} style={inputStyle()}>
             {COUNTRIES.map((c) => (
               <option key={c.code} value={c.code}>
@@ -208,7 +187,7 @@ export function SetupFormClient({
           </select>
         </Field>
 
-        <Field label="Auszahlungs-Methode">
+        <Field label={tt.field_payout_method_label}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
             {(["paypal", "wise", "sepa"] as const).map((m) => (
               <button
@@ -235,72 +214,31 @@ export function SetupFormClient({
         </Field>
 
         {method === "sepa" ? (
-          <Field label="IBAN">
-            <input
-              value={iban}
-              onChange={(e) => setIban(e.target.value.toUpperCase())}
-              placeholder="DE89 3704 0044 0532 0130 00"
-              style={inputStyle()}
-            />
+          <Field label={tt.field_iban_label}>
+            <input value={iban} onChange={(e) => setIban(e.target.value.toUpperCase())} placeholder="DE89 3704 0044 0532 0130 00" style={inputStyle()} />
           </Field>
         ) : (
-          <Field label={method === "paypal" ? "PayPal-Email" : "Wise-Email"}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="marie@example.com"
-              style={inputStyle()}
-            />
+          <Field label={method === "paypal" ? tt.field_email_label_paypal : tt.field_email_label_wise}>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={tt.field_email_placeholder} style={inputStyle()} />
           </Field>
         )}
 
         {!isForeign && (
-          <Field label="Steuerlicher Status">
-            <select
-              value={taxStatus}
-              onChange={(e) => setTaxStatus(e.target.value as TaxStatus)}
-              style={inputStyle()}
-            >
-              <option value="kleinunternehmer">Kleinunternehmer (kein USt-Ausweis)</option>
-              <option value="regelbesteuert">Regelbesteuert (mit USt)</option>
+          <Field label={tt.field_tax_label}>
+            <select value={taxStatus} onChange={(e) => setTaxStatus(e.target.value as TaxStatus)} style={inputStyle()}>
+              <option value="kleinunternehmer">{tt.tax_kleinunternehmer}</option>
+              <option value="regelbesteuert">{tt.tax_regelbesteuert}</option>
             </select>
           </Field>
         )}
 
-        <label
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            marginTop: 6,
-            marginBottom: 24,
-            cursor: "pointer",
-            color: T.textSecondary,
-            fontSize: 14,
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={invoiceCapable}
-            onChange={(e) => setInvoiceCapable(e.target.checked)}
-            style={{ width: 18, height: 18, accentColor: T.accent }}
-          />
-          Ich kann monatlich eine Rechnung schreiben
+        <label style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 6, marginBottom: 24, cursor: "pointer", color: T.textSecondary, fontSize: 14 }}>
+          <input type="checkbox" checked={invoiceCapable} onChange={(e) => setInvoiceCapable(e.target.checked)} style={{ width: 18, height: 18, accentColor: T.accent }} />
+          {tt.checkbox_invoice_capable}
         </label>
 
         {error && (
-          <div
-            style={{
-              padding: "10px 14px",
-              background: T.error + "22",
-              border: `1px solid ${T.error}55`,
-              borderRadius: 10,
-              color: T.error,
-              fontSize: 14,
-              marginBottom: 16,
-            }}
-          >
+          <div style={{ padding: "10px 14px", background: T.error + "22", border: `1px solid ${T.error}55`, borderRadius: 10, color: T.error, fontSize: 14, marginBottom: 16 }}>
             {error}
           </div>
         )}
@@ -323,12 +261,11 @@ export function SetupFormClient({
             opacity: busy ? 0.7 : 1,
           }}
         >
-          {busy ? "Speichere…" : "Account aktivieren"}
+          {busy ? tt.submit_busy : tt.submit_idle}
         </button>
 
         <p style={{ fontSize: 11, color: T.textTertiary, textAlign: "center", marginTop: 14, lineHeight: 1.5 }}>
-          Mit dem Klick auf &quot;Aktivieren&quot; bestätigst du {sharePct}% Lifetime-Revenue-Share für{" "}
-          {shareMonths} Monate pro Sub. Auszahlung monatlich an die oben angegebene Methode.
+          {fill(tt.consent, { sharePct, shareMonths })}
         </p>
       </div>
     </main>
@@ -338,17 +275,7 @@ export function SetupFormClient({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: 16 }}>
-      <label
-        style={{
-          display: "block",
-          fontSize: 13,
-          fontWeight: 500,
-          color: T.textSecondary,
-          marginBottom: 6,
-        }}
-      >
-        {label}
-      </label>
+      <label style={{ display: "block", fontSize: 13, fontWeight: 500, color: T.textSecondary, marginBottom: 6 }}>{label}</label>
       {children}
     </div>
   );
@@ -366,7 +293,6 @@ function pageStyle(): React.CSSProperties {
     padding: 24,
   };
 }
-
 function cardStyle(): React.CSSProperties {
   return {
     maxWidth: 480,
@@ -377,7 +303,6 @@ function cardStyle(): React.CSSProperties {
     padding: "32px 28px",
   };
 }
-
 function h1Style(): React.CSSProperties {
   return {
     fontFamily: "var(--font-bricolage), system-ui",
@@ -388,7 +313,6 @@ function h1Style(): React.CSSProperties {
     color: T.text,
   };
 }
-
 function inputStyle(): React.CSSProperties {
   return {
     width: "100%",
