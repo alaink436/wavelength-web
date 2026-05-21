@@ -1,6 +1,7 @@
-// Translations for the affiliate setup form.
-// Falls a language is not yet translated, EN is used as fallback.
-// Country labels stay in DE for now (display-only, optional V2).
+// Translations for the Wavelength affiliate setup form.
+// Multi-step shell: UI strings translated to DE/EN/FR/ES/IT/NL.
+// Brand-story body content (welcome/tracking step bodies) DE+EN only,
+// other langs fall back to EN.
 
 export type Lang = "de" | "en" | "fr" | "es" | "it" | "nl" | "pt" | "pl";
 
@@ -16,10 +17,11 @@ export interface T {
   done_title: string;
   done_body: string;
   done_promo_label: string;
-  done_share_explainer: string; // {sharePct}, {shareMonths}
+  done_share_explainer: string;
   done_tracking_label: string;
-  tag: string; // appears as small chip top-of-card
-  welcome_title: string; // {handle}
+  done_dashboard_cta: string;
+  tag: string;
+  welcome_title: string;
   welcome_body: string;
   field_name_label: string;
   field_name_placeholder: string;
@@ -39,8 +41,22 @@ export interface T {
   err_generic: string;
   submit_idle: string;
   submit_busy: string;
-  consent: string; // {sharePct}, {shareMonths}
-  contact_help: string; // shown on expired/done pages, contains email
+  consent: string;
+  contact_help: string;
+  step_welcome: string;
+  step_tracking: string;
+  step_payout: string;
+  step_done: string;
+  nav_back: string;
+  nav_next: string;
+  welcome_what_title: string;
+  welcome_audience_title: string;
+  welcome_ideas_title: string;
+  welcome_math_title: string;
+  welcome_compensation_title: string;
+  tracking_pipeline_title: string;
+  tracking_protection_title: string;
+  tracking_compliance_title: string;
 }
 
 function tpl(s: string, vars: Record<string, string | number>): string {
@@ -55,9 +71,10 @@ const de: T = {
   done_promo_label: "Promo-Code",
   done_share_explainer: "Deine Audience bekommt 20% Rabatt auf den ersten Premium-Monat, du bekommst {sharePct}% Lifetime-Share für {shareMonths} Monate auf jeden Sub, der über deinen Code kommt. Auszahlung jeden Monatsanfang.",
   done_tracking_label: "Dein Tracking-Link",
+  done_dashboard_cta: "Zu deinem Affiliate-Dashboard",
   tag: "Affiliate",
   welcome_title: "Willkommen, @{handle}.",
-  welcome_body: "Letzte Daten für die Auszahlung, dann bist du drin. Dauert eine Minute.",
+  welcome_body: "Vier kurze Schritte, dann ist dein Tracking-Link live.",
   field_name_label: "Dein Name (für Rechnungen)",
   field_name_placeholder: "Marie Schmidt",
   field_country_label: "Land",
@@ -78,6 +95,20 @@ const de: T = {
   submit_busy: "Speichere…",
   consent: "Mit dem Klick bestätigst du {sharePct}% Lifetime-Revenue-Share für {shareMonths} Monate pro Sub. Auszahlung monatlich.",
   contact_help: "Schreib mir an {email}.",
+  step_welcome: "Willkommen",
+  step_tracking: "Tracking",
+  step_payout: "Auszahlung",
+  step_done: "Fertig",
+  nav_back: "Zurück",
+  nav_next: "Weiter",
+  welcome_what_title: "Was ist Wavelength",
+  welcome_audience_title: "Passt zu deiner Audience",
+  welcome_ideas_title: "Content-Ideen",
+  welcome_math_title: "Rechnen wir nach",
+  welcome_compensation_title: "Was du bekommst",
+  tracking_pipeline_title: "So funktioniert das Tracking",
+  tracking_protection_title: "Schutz-Mechanismen",
+  tracking_compliance_title: "Werbekennzeichnung",
 };
 
 const en: T = {
@@ -88,9 +119,10 @@ const en: T = {
   done_promo_label: "Promo code",
   done_share_explainer: "Your audience gets 20% off their first Premium month, you get {sharePct}% lifetime share for {shareMonths} months on every sub that comes through your code. Payout the first of each month.",
   done_tracking_label: "Your tracking link",
+  done_dashboard_cta: "To your affiliate dashboard",
   tag: "Affiliate",
   welcome_title: "Welcome, @{handle}.",
-  welcome_body: "Last bits for the payout, then you're set. Takes a minute.",
+  welcome_body: "Four short steps, then your tracking link is live.",
   field_name_label: "Your name (for invoices)",
   field_name_placeholder: "Marie Smith",
   field_country_label: "Country",
@@ -111,6 +143,20 @@ const en: T = {
   submit_busy: "Saving…",
   consent: "By clicking you confirm {sharePct}% lifetime revenue share for {shareMonths} months per sub. Monthly payout.",
   contact_help: "Drop me a line at {email}.",
+  step_welcome: "Welcome",
+  step_tracking: "Tracking",
+  step_payout: "Payout",
+  step_done: "Done",
+  nav_back: "Back",
+  nav_next: "Next",
+  welcome_what_title: "What is Wavelength",
+  welcome_audience_title: "Fits your audience",
+  welcome_ideas_title: "Content ideas",
+  welcome_math_title: "Let's do the math",
+  welcome_compensation_title: "What you get",
+  tracking_pipeline_title: "How tracking works",
+  tracking_protection_title: "Protection mechanisms",
+  tracking_compliance_title: "Disclosure",
 };
 
 const fr: T = {
@@ -121,9 +167,10 @@ const fr: T = {
   done_body: "Ton code promo pour ton audience :",
   done_promo_label: "Code promo",
   done_tracking_label: "Ton lien de suivi",
+  done_dashboard_cta: "Vers ton tableau de bord",
   tag: "Affilié",
   welcome_title: "Bienvenue, @{handle}.",
-  welcome_body: "Dernières infos pour le paiement, et c'est parti. Une minute.",
+  welcome_body: "Quatre courtes étapes, puis ton lien est en ligne.",
   field_name_label: "Ton nom (pour les factures)",
   field_country_label: "Pays",
   field_payout_method_label: "Méthode de paiement",
@@ -140,6 +187,12 @@ const fr: T = {
   submit_idle: "Activer le compte",
   submit_busy: "Sauvegarde…",
   consent: "En cliquant tu confirmes {sharePct}% de revenu à vie pendant {shareMonths} mois par abonnement. Paiement mensuel.",
+  step_welcome: "Bienvenue",
+  step_tracking: "Tracking",
+  step_payout: "Paiement",
+  step_done: "Terminé",
+  nav_back: "Retour",
+  nav_next: "Suivant",
 };
 
 const es: T = {
@@ -150,9 +203,10 @@ const es: T = {
   done_body: "Tu código promocional para tu audiencia:",
   done_promo_label: "Código promo",
   done_tracking_label: "Tu enlace de seguimiento",
+  done_dashboard_cta: "A tu panel de afiliado",
   tag: "Afiliado",
   welcome_title: "Bienvenida, @{handle}.",
-  welcome_body: "Últimos datos para el pago y ya estás dentro. Tarda un minuto.",
+  welcome_body: "Cuatro pasos cortos y tu enlace está en vivo.",
   field_name_label: "Tu nombre (para facturas)",
   field_country_label: "País",
   field_payout_method_label: "Método de pago",
@@ -169,6 +223,12 @@ const es: T = {
   submit_idle: "Activar cuenta",
   submit_busy: "Guardando…",
   consent: "Al hacer clic confirmas {sharePct}% de ingresos de por vida durante {shareMonths} meses por suscripción. Pago mensual.",
+  step_welcome: "Bienvenida",
+  step_tracking: "Tracking",
+  step_payout: "Pago",
+  step_done: "Listo",
+  nav_back: "Atrás",
+  nav_next: "Siguiente",
 };
 
 const it: T = {
@@ -179,9 +239,10 @@ const it: T = {
   done_body: "Il tuo codice promo per il tuo pubblico:",
   done_promo_label: "Codice promo",
   done_tracking_label: "Il tuo link di tracking",
+  done_dashboard_cta: "Al tuo pannello affiliato",
   tag: "Affiliato",
   welcome_title: "Benvenuta, @{handle}.",
-  welcome_body: "Ultimi dati per il pagamento e sei dentro. Ci vuole un minuto.",
+  welcome_body: "Quattro passi brevi, poi il tuo link è live.",
   field_name_label: "Il tuo nome (per le fatture)",
   field_country_label: "Paese",
   field_payout_method_label: "Metodo di pagamento",
@@ -198,6 +259,12 @@ const it: T = {
   submit_idle: "Attiva account",
   submit_busy: "Salvataggio…",
   consent: "Cliccando confermi il {sharePct}% di revenue share a vita per {shareMonths} mesi per ogni sub. Pagamento mensile.",
+  step_welcome: "Benvenuto",
+  step_tracking: "Tracking",
+  step_payout: "Pagamento",
+  step_done: "Fatto",
+  nav_back: "Indietro",
+  nav_next: "Avanti",
 };
 
 const nl: T = {
@@ -208,9 +275,10 @@ const nl: T = {
   done_body: "Jouw promocode voor je audience:",
   done_promo_label: "Promocode",
   done_tracking_label: "Jouw tracking-link",
+  done_dashboard_cta: "Naar je affiliate-dashboard",
   tag: "Affiliate",
   welcome_title: "Welkom, @{handle}.",
-  welcome_body: "Laatste gegevens voor de uitbetaling, dan ben je klaar. Duurt een minuutje.",
+  welcome_body: "Vier korte stappen en je link is live.",
   field_name_label: "Je naam (voor facturen)",
   field_country_label: "Land",
   field_payout_method_label: "Uitbetalingsmethode",
@@ -227,6 +295,12 @@ const nl: T = {
   submit_idle: "Account activeren",
   submit_busy: "Bezig met opslaan…",
   consent: "Door te klikken bevestig je {sharePct}% lifetime revenue share gedurende {shareMonths} maanden per sub. Maandelijkse uitbetaling.",
+  step_welcome: "Welkom",
+  step_tracking: "Tracking",
+  step_payout: "Uitbetaling",
+  step_done: "Klaar",
+  nav_back: "Terug",
+  nav_next: "Verder",
 };
 
 const pt: T = { ...en };
@@ -236,7 +310,7 @@ const ALL: Record<Lang, T> = { de, en, fr, es, it, nl, pt, pl };
 
 export function t(lang: Lang | string | null | undefined): T {
   if (isLang(lang)) return ALL[lang];
-  return de; // default fallback
+  return de;
 }
 
 export function fill(s: string, vars: Record<string, string | number>): string {
