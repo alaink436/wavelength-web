@@ -67,6 +67,7 @@ export const BRANDS: Record<BrandKey, Brand> = {
     attributionMonths: 12,
     streamLabel: "Premium-Abos",
     iconUrl: "/icons/wavelength.webp",
+    assetsDriveUrl: "https://drive.google.com/drive/folders/1TZREwEopAZkJE_XkbCpTAKfScUpevWg1?usp=sharing",
     mascot: null,
     glyph: { letter: "W", italic: false },
     pdfTitle: "Creator Brief",
