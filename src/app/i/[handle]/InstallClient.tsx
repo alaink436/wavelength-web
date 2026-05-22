@@ -75,8 +75,14 @@ export function InstallClient({
         keepalive: true,
       }).catch(() => {});
     }
-    // ?preview disables auto-redirect so the page can be screenshot in dev.
-    if (typeof window !== 'undefined' && window.location.search.includes('preview')) {
+    // Skip auto-redirect on desktop (no iOS/Android app to install there) and
+    // on ?preview for dev screenshots. Mobile keeps the fast cold-install path.
+    const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
+    const isPreview =
+      typeof window !== "undefined" && window.location.search.includes("preview");
+    if (!isMobile || isPreview) {
+      void writeClipboard().catch(() => undefined);
       return;
     }
     const clipboardP = writeClipboard().catch(() => undefined);
