@@ -1,30 +1,31 @@
 @import "tailwindcss";
 
-/* On Wavelength — perceptually uniform tokens (OKLCH), tinted toward brand hue */
+/* Basalt — mirrors src/theme/index.ts in the app repo. Hex rather than OKLCH
+   so both codebases carry byte-identical values and cannot drift apart. */
 :root {
-  /* Backgrounds, deepest first. All neutrals tinted ~250 deg toward brand blue. */
-  --background:        oklch(0.13 0.012 250);   /* #06080E equiv */
-  --surface:           oklch(0.18 0.012 250);
-  --surface-elevated:  oklch(0.23 0.014 250);
+  /* Backgrounds, deepest first */
+  --background:        #0C0C0E;
+  --surface:           #17171A;
+  --surface-elevated:  #202024;
 
   /* Foregrounds */
-  --foreground:        oklch(0.95 0.005 250);
-  --text-secondary:    oklch(0.68 0.012 250);
-  --text-tertiary:     oklch(0.46 0.012 250);
-  --text-quaternary:   oklch(0.32 0.012 250);
+  --foreground:        #F2F2F4;
+  --text-secondary:    #9A9AA2;
+  --text-tertiary:     #82828B;
+  --text-quaternary:   #6B6B73;
 
-  /* Brand */
-  --accent:            oklch(0.72 0.16 245);
-  --accent-dark:       oklch(0.62 0.20 250);
-  --accent-light:      oklch(0.82 0.10 240);
-  --accent-muted:      oklch(0.72 0.16 245 / 0.12);
+  /* The one accent: a desaturated sage, kept quiet on purpose */
+  --accent:            #A8D5BA;
+  --accent-dark:       #7FB394;
+  --accent-light:      #C6E4D2;
+  --accent-muted:      rgba(168, 213, 186, 0.12);
 
   /* Lines */
-  --border:            oklch(0.22 0.012 250);
-  --border-subtle:     oklch(0.18 0.008 250);
+  --border:            #2A2A2F;
+  --border-subtle:     #1F1F24;
 
-  --error:             oklch(0.70 0.18 25);
-  --success:           oklch(0.74 0.15 155);
+  --error:             #E5747A;
+  --success:           #A8D5BA;
 }
 
 @theme inline {

@@ -361,7 +361,7 @@ export function InstallClient({
             }}
           >
             {handle
-              ? `Tippe Get — @${handle} wird automatisch deinem Install zugeordnet.`
+              ? `Tippe auf Basalt laden, @${handle} wird deinem Install automatisch zugeordnet.`
               : "Tippe Get, dann startet der App Store direkt."}
           </p>
         </article>

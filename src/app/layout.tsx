@@ -8,7 +8,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-// App-Theme fonts (matches Thinq/Wavelength native app — DM Sans body, Bricolage Grotesque display)
+// App-theme fonts, matching the Basalt app: DM Sans for body, Bricolage Grotesque for display.
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
@@ -22,11 +22,11 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  title: "Basalt — Ein Ziel. Wirklich durchgezogen.",
+  title: "Basalt: Ein Ziel. Wirklich durchgezogen.",
   description:
     "Du wählst ein Ziel, die App setzt es durch. Sie sperrt die Apps und Seiten, die dir im Weg stehen, oder legt dir den Plan in den Apple Kalender. Nach deiner Zielspanne ist es geschafft.",
   openGraph: {
-    title: "Basalt — Ein Ziel. Wirklich durchgezogen.",
+    title: "Basalt: Ein Ziel. Wirklich durchgezogen.",
     description:
       "Ein Ziel, von der App durchgesetzt. Sperren oder planen, mit festem Ende.",
     type: "website",
