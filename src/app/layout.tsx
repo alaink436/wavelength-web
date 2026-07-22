@@ -22,12 +22,13 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  title: "On Wavelength — Plan smarter, together.",
+  title: "Basalt — Ein Ziel. Wirklich durchgezogen.",
   description:
-    "Der Kalender für Freundeskreise und Sport-Teams. Termine per Heatmap-Voting finden, Trainings mit Lineup planen, Live-Attendance tracken. iOS + Android.",
+    "Du wählst ein Ziel, die App setzt es durch. Sie sperrt die Apps und Seiten, die dir im Weg stehen, oder legt dir den Plan in den Apple Kalender. Nach deiner Zielspanne ist es geschafft.",
   openGraph: {
-    title: "On Wavelength — Plan smarter, together.",
-    description: "Der Kalender für Freundeskreise und Sport-Teams.",
+    title: "Basalt — Ein Ziel. Wirklich durchgezogen.",
+    description:
+      "Ein Ziel, von der App durchgesetzt. Sperren oder planen, mit festem Ende.",
     type: "website",
   },
 };

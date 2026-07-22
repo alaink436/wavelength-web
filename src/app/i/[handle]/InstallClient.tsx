@@ -1,31 +1,37 @@
 "use client";
 
-// Influencer landing + clipboard deferred-deeplink for Wavelength.
+// Influencer landing + clipboard deferred-deeplink for Basalt - Follow Through.
 //
-// Visual identity = a printed concert/swim-club poster: bg-water-1.png as a
-// full-bleed photograph, the glass mascot crashing through the top of the
-// card, a dense dark paper card (not a glass-card), a surfing companion
-// mascot anchoring the bottom corner.
+// Visual identity mirrors the app: dark base, one restrained sage accent, no
+// imagery. The old Wavelength identity (water photograph, two surf mascots,
+// light-blue wave accent) was removed on 2026-07-21 — it belonged to the
+// calendar app, and the product brief rules out mascots for this subject.
+//
+// The URL path stays /i/<handle> and the token stays `wlref:` because both are
+// keyed into the affiliate schema; only the product changed.
 //
 // iOS clipboard writes only work inside a user gesture; the tap writes
 // `wlref:<handle>:v1`, then redirects to the App Store.
 
 import { useEffect, useRef, useState } from "react";
 
-const IOS_URL = "https://apps.apple.com/de/app/on-wavelength/id6739700000";
+// ID-only form: Apple resolves by id, so the name slug in the URL is irrelevant
+// and cannot go stale when the app is renamed.
+const IOS_URL = "https://apps.apple.com/de/app/id6739700000";
 const ANDROID_ID = "com.wavelenght.app";
 const FORCE_REDIRECT_MS = 2000;
 
+// Mirrors src/theme in the app repo.
 const T = {
-  bgInk: "#06070D",
-  card: "#0E1118",
-  cardHi: "#161A23",
-  text: "#F3F1EA",
-  textSecondary: "#A4A3AD",
-  textTertiary: "#6E6D78",
-  accent: "#7DD3FC",
-  accentInk: "#0C4A6E",
-  accentSoft: "rgba(125, 211, 252, 0.12)",
+  bgInk: "#0C0C0E",
+  card: "#17171A",
+  cardHi: "#202024",
+  text: "#F2F2F4",
+  textSecondary: "#9A9AA2",
+  textTertiary: "#82828B",
+  accent: "#A8D5BA",
+  accentInk: "#0C0C0E",
+  accentSoft: "rgba(168, 213, 186, 0.12)",
   rule: "rgba(255, 255, 255, 0.10)",
 };
 
@@ -121,9 +127,6 @@ export function InstallClient({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: "url('/bg-water-1.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
         backgroundColor: T.bgInk,
         color: T.text,
         fontFamily: "var(--font-dm-sans), system-ui, -apple-system, sans-serif",
@@ -132,43 +135,18 @@ export function InstallClient({
         overflow: "hidden",
       }}
     >
-      {/* Dark vignette so the body text sits on dense ink, not on the photo.
-          No glass/blur — the water photo bleeds at the edges only. */}
+      {/* One very quiet accent glow behind the card. No photograph, no mascot:
+          the subject is self-discipline, and decoration undercuts it. */}
       <div
         aria-hidden
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(ellipse 90% 70% at 50% 50%, rgba(6, 7, 13, 0.55) 0%, rgba(6, 7, 13, 0.92) 70%, rgba(6, 7, 13, 1) 100%)",
+            "radial-gradient(ellipse 70% 50% at 50% 30%, rgba(168, 213, 186, 0.07) 0%, rgba(12, 12, 14, 0) 70%)",
           pointerEvents: "none",
         }}
       />
-
-      {/* Surfing mascot — bottom-left, decorative companion that ties the
-          water photo to the card. */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          left: "calc(50% - 280px)",
-          bottom: "8%",
-          width: 180,
-          height: 180,
-          pointerEvents: "none",
-          zIndex: 2,
-          transform: "rotate(-12deg)",
-          filter:
-            "drop-shadow(0 22px 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 22px rgba(125, 211, 252, 0.25))",
-        }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/mascots/pose-surf.png"
-          alt=""
-          style={{ width: "100%", height: "100%", objectFit: "contain" }}
-        />
-      </div>
 
       <div
         style={{
@@ -178,25 +156,6 @@ export function InstallClient({
           zIndex: 1,
         }}
       >
-        {/* Reaching mascot — crashes through the top of the card. Lifted by
-            negative margin so it overlaps the card edge. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/mascots/pose-reach.png"
-          alt=""
-          aria-hidden
-          width={200}
-          height={200}
-          style={{
-            display: "block",
-            margin: "0 auto -36px",
-            position: "relative",
-            zIndex: 3,
-            filter:
-              "drop-shadow(0 22px 36px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 30px rgba(125, 211, 252, 0.3))",
-          }}
-        />
-
         <article
           style={{
             position: "relative",
@@ -225,7 +184,7 @@ export function InstallClient({
             }}
           />
 
-          {/* Eyebrow line: wave-mark + handle. Left-aligned, no centered pill */}
+          {/* Eyebrow line: mark + handle. Left-aligned, no centered pill */}
           <header
             style={{
               display: "flex",
@@ -240,9 +199,10 @@ export function InstallClient({
           >
             <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
+              {/* TODO: swap for the Basalt icon once the logo exists. */}
               <img
                 src="/icons/wavelength.webp"
-                alt="On Wavelength"
+                alt="Basalt"
                 width={30}
                 height={30}
                 style={{
@@ -260,24 +220,8 @@ export function InstallClient({
                   color: T.text,
                 }}
               >
-                On Wavelength
+                Basalt
               </span>
-              <svg
-                width="28"
-                height="20"
-                viewBox="0 0 32 22"
-                fill="none"
-                aria-hidden
-                style={{ color: T.accent }}
-              >
-                <path
-                  d="M2 11c3-7 6-7 9 0s6 7 9 0 6-7 9 0"
-                  stroke="currentColor"
-                  strokeWidth="2.6"
-                  strokeLinecap="round"
-                  fill="none"
-                />
-              </svg>
             </span>
             <span
               style={{
@@ -304,9 +248,9 @@ export function InstallClient({
               color: T.text,
             }}
           >
-            Der Plan,
+            Ein Ziel.
             <br />
-            <span style={{ color: T.accent }}>der nicht nervt.</span>
+            <span style={{ color: T.accent }}>Wirklich durchgezogen.</span>
           </h1>
 
           <p
@@ -318,11 +262,12 @@ export function InstallClient({
               maxWidth: 360,
             }}
           >
-            Gruppenkalender mit Heatmap-Voting und Sport-Lineups für acht
-            Sportarten. Niemand muss mehr fragen wer noch kann.
+            Du wählst ein Ziel, die App setzt es durch. Sie sperrt, was dich
+            abhält, oder legt dir den Plan in den Kalender. Nach deiner
+            Zielspanne ist es geschafft.
           </p>
 
-          {/* Three lineups — short, left-aligned, no card grid */}
+          {/* Three points — short, left-aligned, no card grid */}
           <ul
             style={{
               listStyle: "none",
@@ -333,9 +278,9 @@ export function InstallClient({
             }}
           >
             {[
-              ["Heatmap", "Sieh sofort wann alle Zeit haben"],
-              ["Lineups", "8 Sportarten, ein Tap zur Aufstellung"],
-              ["Reminder", "Nur Pings, die wirklich nötig sind"],
+              ["Sperre", "Apps und Seiten, die dir im Weg stehen"],
+              ["Plan", "Feste Termine, direkt im Apple Kalender"],
+              ["Ende", "Dein Ziel wird fertig, nicht zum Dauerabo"],
             ].map(([label, desc]) => (
               <li
                 key={label}
@@ -404,7 +349,7 @@ export function InstallClient({
                 <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
               </svg>
             )}
-            {redirecting ? "Opening the App Store…" : "Get On Wavelength"}
+            {redirecting ? "App Store wird geöffnet…" : "Basalt laden"}
           </button>
 
           <p
