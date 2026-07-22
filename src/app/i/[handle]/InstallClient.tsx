@@ -23,15 +23,15 @@ const FORCE_REDIRECT_MS = 2000;
 
 // Mirrors src/theme in the app repo.
 const T = {
-  bgInk: "#0C0C0E",
-  card: "#17171A",
-  cardHi: "#202024",
-  text: "#F2F2F4",
+  bgInk: "#0A0A0C",
+  card: "#141519",
+  cardHi: "#1C1D22",
+  text: "#F7F6F4",
   textSecondary: "#9A9AA2",
-  textTertiary: "#82828B",
-  accent: "#A8D5BA",
-  accentInk: "#0C0C0E",
-  accentSoft: "rgba(168, 213, 186, 0.12)",
+  textTertiary: "#8A8A93",
+  accent: "#FF9E6D",
+  accentInk: "#2A0E0A",
+  accentSoft: "rgba(255, 158, 109, 0.12)",
   rule: "rgba(255, 255, 255, 0.10)",
 };
 
@@ -143,7 +143,7 @@ export function InstallClient({
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(ellipse 70% 50% at 50% 30%, rgba(168, 213, 186, 0.07) 0%, rgba(12, 12, 14, 0) 70%)",
+            "radial-gradient(ellipse 70% 50% at 50% 30%, rgba(255, 158, 109, 0.07) 0%, rgba(10, 10, 12, 0) 70%)",
           pointerEvents: "none",
         }}
       />

@@ -46,7 +46,7 @@ export default function Home() {
       <nav
         className="fixed top-0 left-0 right-0 z-50"
         style={{
-          background: "rgba(12, 12, 14, 0.85)",
+          background: "rgba(10, 10, 12, 0.85)",
           backdropFilter: "blur(20px) saturate(140%)",
         }}
       >
@@ -70,7 +70,7 @@ export default function Home() {
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(168, 213, 186, 0.06) 0%, rgba(12, 12, 14, 0) 70%)",
+              "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255, 158, 109, 0.06) 0%, rgba(10, 10, 12, 0) 70%)",
           }}
         />
         <div className="relative max-w-[1180px] mx-auto">
