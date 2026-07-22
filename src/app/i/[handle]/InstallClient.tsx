@@ -17,7 +17,7 @@ import { useEffect, useRef, useState } from "react";
 
 // ID-only form: Apple resolves by id, so the name slug in the URL is irrelevant
 // and cannot go stale when the app is renamed.
-const IOS_URL = "https://apps.apple.com/de/app/id6739700000";
+const IOS_URL = "https://apps.apple.com/de/app/id6762440839";
 const ANDROID_ID = "com.wavelenght.app";
 const FORCE_REDIRECT_MS = 2000;
 

@@ -24,7 +24,7 @@ const fadeUp = {
 };
 
 // Apple resolves by id, so the name slug cannot go stale on a rename.
-const APP_STORE_URL = "https://apps.apple.com/de/app/id6739700000";
+const APP_STORE_URL = "https://apps.apple.com/de/app/id6762440839";
 
 const WAYS = [
   {
