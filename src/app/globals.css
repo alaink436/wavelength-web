@@ -72,6 +72,62 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+/* The typographic field behind the page — see wordmark-field.tsx. Fixed, so it stays put while
+   the page scrolls past it, and clipped, so the tilted plane's corners never widen the
+   document. The rotation and the sway are the only things that move, and they move the one
+   container rather than the ~700 words inside it. */
+.wordmark-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--ink);
+}
+
+.wordmark-field__plane {
+  position: absolute;
+  width: 2300px;
+  height: 2300px;
+  left: 50%;
+  top: 50%;
+  margin: -1150px 0 0 -1150px;
+  transform: rotate(-30deg);
+  animation: wordmark-sway 18s ease-in-out infinite;
+}
+
+/* Past ~1900px the generated 2300px plane no longer reaches the corners of a rotated viewport.
+   Scaling it is cheaper than generating a bigger field, and at this ink nobody reads the grain. */
+@media (min-width: 1900px) {
+  .wordmark-field__plane {
+    scale: 1.35;
+  }
+}
+
+.wordmark-field__row {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  white-space: nowrap;
+}
+
+@keyframes wordmark-sway {
+  0%,
+  100% {
+    translate: -6px 0;
+  }
+  50% {
+    translate: 6px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordmark-field__plane {
+    animation: none;
+  }
+}
+
 /* Text selection and scrollbar. The Wavelength utility classes that used to
    live here (water texture, blue ambient gradients, three glass tiers, accent
    glow, section numbering) were removed on 2026-07-22: they carried the old

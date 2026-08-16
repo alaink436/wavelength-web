@@ -22,8 +22,8 @@ const IOS_URL = "https://apps.apple.com/de/app/id6762440839";
 const CODE_RE = /^[0-9A-HJ-NP-TV-Z]{8}$/;
 
 export const metadata: Metadata = {
-  title: "Eine Routine wurde mit dir geteilt — Basalt",
-  description: "Mit Basalt kannst du zusehen, wie jemand seine Routine durchzieht.",
+  title: "A routine was shared with you — Basalt",
+  description: "With Basalt you can watch someone follow through on a routine.",
 };
 
 export default function InvitePage({
@@ -57,12 +57,12 @@ export default function InvitePage({
     >
       <div style={{ maxWidth: 420, display: "grid", gap: 14 }}>
         <h1 style={{ fontSize: 34, lineHeight: 1.15, fontWeight: 700, margin: 0 }}>
-          jemand zieht etwas durch.
+          someone is following through.
         </h1>
         <p style={{ fontSize: 17, lineHeight: 1.5, color: "#6B6B70", margin: 0 }}>
           {looksReal
-            ? "Du wurdest eingeladen, bei einer Routine zuzusehen. Lesend — du kannst nichts abhaken und nichts ändern."
-            : "Dieser Einladungscode sieht nicht vollständig aus. Frag nach dem Link oder gib den Code in der App von Hand ein."}
+            ? "You have been invited to watch a routine. Read only: you cannot tick anything off and cannot change anything."
+            : "This invite code does not look complete. Ask for the link again, or type the code into the app by hand."}
         </p>
       </div>
 
@@ -76,7 +76,7 @@ export default function InvitePage({
               color: "#8A8A90",
             }}
           >
-            dein code
+            your code
           </span>
           <code
             style={{
@@ -110,13 +110,13 @@ export default function InvitePage({
           textDecoration: "none",
         }}
       >
-        Basalt laden
+        Get Basalt
       </a>
 
       <p style={{ fontSize: 14, lineHeight: 1.5, color: "#8A8A90", margin: 0, maxWidth: 380 }}>
         {looksReal
-          ? "Hast du die App schon, öffne diesen Link auf deinem iPhone — er springt direkt hinein. Sonst: laden, Konto anlegen, den Code oben eingeben."
-          : "Hast du die App schon, öffne diesen Link auf deinem iPhone."}
+          ? "Already have the app? Open this link on your iPhone and it jumps straight in. Otherwise: install it, create an account, and enter the code above."
+          : "Already have the app? Open this link on your iPhone."}
       </p>
     </main>
   );

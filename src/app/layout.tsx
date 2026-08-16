@@ -25,9 +25,9 @@ const bricolage = Bricolage_Grotesque({
   weight: ["500", "700"],
 });
 
-const TITLE = "Basalt - Follow Through: gewohnheiten im widget";
+const TITLE = "Basalt - Follow Through: habit tracker in a widget";
 const DESCRIPTION =
-  "Du schreibst auf, was du durchziehen willst, und wie oft pro Woche. Abgehakt wird auf dem Homescreen. Eine Routine darf enden, dann ist sie fertig. Kein Feed, keine Punkte, nichts zum Scrollen.";
+  "You decide how many times a week. You tick it off on the home screen. A routine can have an end, and then it is done. No feed, no points, nothing to scroll.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://onwavelength.space"),
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
     type: "website",
-    locale: "de_DE",
+    locale: "en_US",
     url: "https://onwavelength.space",
   },
   // Smart App Banner. On an iPhone in Safari this puts Apple's own strip at the top of every
@@ -64,9 +64,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // ⚠️ Was lang="en" while every string on the page was German.
+    // English across the domain since 2026-08-16, matching the app's own interface and the
+    // store listing. It briefly said "de" while the landing page was German.
     <html
-      lang="de"
+      lang="en"
       className={`${figtree.variable} ${dmSans.variable} ${bricolage.variable}`}
     >
       {/* The @sneas/telephone script used to load here on every route. Nothing has rendered
