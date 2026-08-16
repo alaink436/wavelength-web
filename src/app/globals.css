@@ -51,6 +51,17 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-figtree), system-ui, -apple-system, sans-serif;
+  /* Safari on iOS otherwise inflates body copy in portrait after a rotation. */
+  -webkit-text-size-adjust: 100%;
+  /* German runs long: "bildschirmzeit-auswahl" alone is 22 characters, and at 375px a single
+     unbreakable compound is what turns a paragraph into a horizontal scrollbar. */
+  overflow-wrap: break-word;
+}
+
+/* The grey flash iOS paints over a tapped link belongs to a document that looks tapped-through.
+   The button already answers with its own opacity change. */
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* The app is iOS-only and light-first; the site does not offer a dark variant, so say so

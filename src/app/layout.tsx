@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Figtree, DM_Sans, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 
@@ -40,6 +40,22 @@ export const metadata: Metadata = {
     locale: "de_DE",
     url: "https://onwavelength.space",
   },
+  // Smart App Banner. On an iPhone in Safari this puts Apple's own strip at the top of every
+  // route here: "Öffnen" when Basalt is installed, otherwise the App Store. Set on the layout
+  // rather than the landing page on purpose, because the two routes where it matters most are
+  // the other ones — /s/<code> is by definition only ever seen by someone without the app
+  // (iOS intercepts it through the AASA otherwise), and /i/<handle> exists to install.
+  //
+  // No app-argument: that value is handed to the app when it opens, and only /i/* and /s/*
+  // are claimed in the AASA. Passing the site root would give the app a URL it does not route.
+  itunes: { appId: "6762440839" },
+};
+
+export const viewport: Viewport = {
+  // Not maximumScale/userScalable — pinch-zoom stays available. A marketing page is not worth
+  // taking that away from anyone who needs it.
+  themeColor: "#FFFFFF",
+  colorScheme: "light",
 };
 
 export default function RootLayout({

@@ -78,7 +78,9 @@ function StoreButton({ className = "" }: { className?: string }) {
   return (
     <a
       href={APP_STORE_URL}
-      className={`inline-flex h-12 items-center justify-center rounded-full bg-[var(--ink)] px-7 text-[15px] font-bold text-[var(--paper)] transition-opacity hover:opacity-85 ${className}`}
+      // h-13 on phones: 52px clears Apple's 44pt minimum with room, and the thumb reaches for
+      // this one control on a page that has nothing else to tap.
+      className={`inline-flex h-13 items-center justify-center rounded-full bg-[var(--ink)] px-8 text-[16px] font-bold text-[var(--paper)] transition-opacity hover:opacity-85 sm:h-12 sm:px-7 sm:text-[15px] ${className}`}
     >
       laden im App&nbsp;Store
     </a>
@@ -88,14 +90,14 @@ function StoreButton({ className = "" }: { className?: string }) {
 export default function Home() {
   return (
     <main className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
-      <div className="mx-auto max-w-[860px] px-6 py-16 sm:px-8 sm:py-24">
+      <div className="mx-auto max-w-[860px] px-5 py-12 sm:px-8 sm:py-24">
         {/* ── Masthead */}
         <motion.div
           initial="hidden"
           animate="visible"
           custom={0}
           variants={fadeUp}
-          className="mb-14 flex items-center gap-4"
+          className="mb-10 flex items-center gap-4 sm:mb-14"
         >
           <Image
             src="/basalt/icon.png"
@@ -116,14 +118,14 @@ export default function Home() {
         </motion.div>
 
         {/* ── Hero. The store listing's own opening line. */}
-        <section className="grid items-center gap-10 sm:grid-cols-[1fr_auto]">
+        <section className="grid items-center gap-8 sm:grid-cols-[1fr_auto] sm:gap-10">
           <div>
             <motion.h1
               initial="hidden"
               animate="visible"
               custom={1}
               variants={fadeUp}
-              className="text-[clamp(34px,7vw,60px)] font-extrabold leading-[1.04] tracking-[-0.03em]"
+              className="text-[clamp(32px,8vw,60px)] font-extrabold leading-[1.04] tracking-[-0.03em] text-balance"
             >
               die meisten tage{" "}
               <span className="text-[var(--mute)]">bleibt diese app zu.</span>
@@ -134,7 +136,7 @@ export default function Home() {
               animate="visible"
               custom={2}
               variants={fadeUp}
-              className="mt-6 max-w-[52ch] text-[17px] font-medium leading-[1.6] text-[var(--mute)]"
+              className="mt-5 max-w-[52ch] text-[17px] font-medium leading-[1.6] text-[var(--mute)] sm:mt-6"
             >
               du schreibst auf, was du durchziehen willst, und wie oft pro woche.
               abgehakt wird auf dem homescreen. das ist der ganze ablauf.
@@ -145,7 +147,7 @@ export default function Home() {
               animate="visible"
               custom={3}
               variants={fadeUp}
-              className="mt-9 flex flex-wrap items-center gap-4"
+              className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 sm:mt-9"
             >
               <StoreButton />
               <span className="text-[14px] font-medium text-[var(--mute)]">
@@ -154,14 +156,18 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* The app's own hero object, unretouched. */}
+          {/* The app's own hero object, unretouched.
+              On a phone it sits BELOW the call to action, not above the headline. The masthead
+              already shows this same stone as the app icon, so leading with it a second time
+              spent 180px of an 812px screen repeating itself and pushed the headline past the
+              halfway mark of the fold. */}
           <motion.div
             initial="hidden"
             animate="visible"
             custom={2}
             variants={fadeUp}
             aria-hidden
-            className="order-first justify-self-center sm:order-none sm:justify-self-end"
+            className="justify-self-center sm:justify-self-end"
           >
             <Image
               src="/basalt/tower.png"
@@ -169,13 +175,13 @@ export default function Home() {
               width={760}
               height={760}
               priority
-              className="h-auto w-[180px] sm:w-[230px]"
+              className="h-auto w-[150px] sm:w-[230px]"
             />
           </motion.div>
         </section>
 
         {/* ── What it does */}
-        <section className="mt-20 rounded-[20px] border border-[var(--line)] bg-[var(--surface)] p-7 sm:mt-28 sm:p-9">
+        <section className="mt-16 rounded-[20px] border border-[var(--line)] bg-[var(--surface)] p-6 sm:mt-28 sm:p-9">
           {FEATURES.map((f, i) => (
             <motion.div
               key={f.title}
@@ -189,7 +195,7 @@ export default function Home() {
               <h2 className="text-[18px] font-bold tracking-[-0.01em]">
                 {f.title}
               </h2>
-              <p className="mt-1.5 max-w-[62ch] text-[15px] font-medium leading-[1.6] text-[var(--mute)]">
+              <p className="mt-1.5 max-w-[62ch] hyphens-auto text-[15px] font-medium leading-[1.6] text-[var(--mute)]">
                 {f.body}
               </p>
             </motion.div>
@@ -204,7 +210,7 @@ export default function Home() {
           viewport={{ once: true, margin: "-60px" }}
           custom={0}
           variants={fadeUp}
-          className="mt-20 border-t border-[var(--line)] pt-14 sm:mt-28"
+          className="mt-16 border-t border-[var(--line)] pt-12 sm:mt-28 sm:pt-14"
         >
           <Image
             src="/basalt/shield.png"
@@ -213,12 +219,12 @@ export default function Home() {
             height={512}
             loading="lazy"
             aria-hidden
-            className="mb-5 h-auto w-[68px]"
+            className="mb-5 h-auto w-[60px] sm:w-[68px]"
           />
-          <h2 className="max-w-[18ch] text-[28px] font-extrabold leading-[1.1] tracking-[-0.03em] sm:text-[36px]">
+          <h2 className="max-w-[18ch] text-balance text-[26px] font-extrabold leading-[1.1] tracking-[-0.03em] sm:text-[36px]">
             wenn das handy im weg steht
           </h2>
-          <p className="mt-5 max-w-[62ch] text-[17px] font-medium leading-[1.6] text-[var(--mute)]">
+          <p className="mt-5 max-w-[62ch] hyphens-auto text-[17px] font-medium leading-[1.6] text-[var(--mute)]">
             basalt kann die apps und webseiten schließen, die an dir ziehen: auf
             zuruf, wenn du dir eine stunde zurückholen willst, oder nachts nach
             plan. was geschlossen wird, wählst du in apples eigener
@@ -227,7 +233,7 @@ export default function Home() {
             das sich nicht knacken lässt, und reibung ist meistens genau der
             teil, der gefehlt hat.
           </p>
-          <p className="mt-6 max-w-[62ch] text-[15px] font-medium leading-[1.6] text-[var(--mute)]">
+          <p className="mt-6 max-w-[62ch] hyphens-auto text-[15px] font-medium leading-[1.6] text-[var(--mute)]">
             routinen, abhaken, das widget, der plan und das teilen sind kostenlos
             und bleiben es. das schließen ist der bezahlte teil: premium, als
             abo monatlich oder jährlich.
@@ -241,33 +247,46 @@ export default function Home() {
           viewport={{ once: true, margin: "-60px" }}
           custom={0}
           variants={fadeUp}
-          className="mt-20 border-t border-[var(--line)] pt-14 sm:mt-28"
+          className="mt-16 border-t border-[var(--line)] pt-12 sm:mt-28 sm:pt-14"
         >
-          <h2 className="max-w-[22ch] text-[28px] font-extrabold leading-[1.15] tracking-[-0.03em] sm:text-[36px]">
+          <h2 className="max-w-[22ch] text-balance text-[26px] font-extrabold leading-[1.15] tracking-[-0.03em] sm:text-[36px]">
             basalt verspricht dir nicht, dass du durchhältst.
           </h2>
           <p className="mt-5 max-w-[56ch] text-[17px] font-medium leading-[1.6] text-[var(--mute)]">
             es hält den nachweis dort, wo du sowieso hinschaust, und geht dir
             sonst aus dem weg.
           </p>
-          <StoreButton className="mt-9" />
+          <StoreButton className="mt-8 sm:mt-9" />
         </motion.section>
 
-        {/* ── Footer */}
-        <footer className="mt-20 border-t border-[var(--line)] pt-7 sm:mt-28">
-          <p className="text-[13px] font-medium leading-[2] tracking-[0.02em] text-[var(--mute)]">
-            <a href={PRIVACY_URL} className="text-[var(--ink)] underline">
-              Datenschutz
-            </a>
-            {" · "}
-            <a href={TERMS_URL} className="text-[var(--ink)] underline">
-              Nutzungsbedingungen
-            </a>
-            {" · "}
-            <a href={`mailto:${CONTACT}`} className="text-[var(--ink)] underline">
-              {CONTACT}
-            </a>
-            <br />
+        {/* ── Footer. The legal links are their own rows on a phone, each a full 44px target.
+             As a run-on sentence separated by "·" they were 17px-tall inline boxes, which is
+             half of what a thumb needs and puts the privacy policy one slip away from the
+             terms. They collapse back into one line from sm up, where a cursor is doing
+             the aiming. */}
+        <footer className="mt-16 border-t border-[var(--line)] pt-5 sm:mt-28 sm:pt-7">
+          <nav className="flex flex-col text-[15px] font-medium sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-2 sm:text-[13px]">
+            {[
+              { href: PRIVACY_URL, label: "Datenschutz" },
+              { href: TERMS_URL, label: "Nutzungsbedingungen" },
+              { href: `mailto:${CONTACT}`, label: CONTACT },
+            ].map((l, i) => (
+              <span key={l.href} className="contents">
+                {i > 0 && (
+                  <span aria-hidden className="hidden text-[var(--mute)] sm:inline">
+                    ·
+                  </span>
+                )}
+                <a
+                  href={l.href}
+                  className="inline-flex min-h-11 items-center text-[var(--ink)] underline sm:min-h-0"
+                >
+                  {l.label}
+                </a>
+              </span>
+            ))}
+          </nav>
+          <p className="mt-3 text-[13px] font-medium leading-[1.7] tracking-[0.02em] text-[var(--mute)]">
             Von Alain Kessler (Schweiz), als{" "}
             <a
               href="https://getklar.org"
