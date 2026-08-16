@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import Script from "next/script";
-import { Inter, DM_Sans, Bricolage_Grotesque } from "next/font/google";
+import { Figtree, DM_Sans, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+// The app's own face since design v3 (2026-08-04): one geometric sans for the whole scale,
+// levels separated by weight and size alone. See src/theme/fonts.ts in the app repo.
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
 });
 
-// App-theme fonts, matching the Basalt app: DM Sans for body, Bricolage Grotesque for display.
+// Design v1/v2 faces. Only /i/<handle> still paints them, and that page is the affiliate
+// install flow with its own dark identity; it was left alone deliberately.
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
@@ -21,15 +25,20 @@ const bricolage = Bricolage_Grotesque({
   weight: ["500", "700"],
 });
 
+const TITLE = "Basalt - Follow Through: gewohnheiten im widget";
+const DESCRIPTION =
+  "Du schreibst auf, was du durchziehen willst, und wie oft pro Woche. Abgehakt wird auf dem Homescreen. Eine Routine darf enden, dann ist sie fertig. Kein Feed, keine Punkte, nichts zum Scrollen.";
+
 export const metadata: Metadata = {
-  title: "Basalt: Ein Ziel. Wirklich durchgezogen.",
-  description:
-    "Du wählst ein Ziel, die App setzt es durch. Sie sperrt die Apps und Seiten, die dir im Weg stehen, oder legt dir den Plan in den Apple Kalender. Nach deiner Zielspanne ist es geschafft.",
+  metadataBase: new URL("https://onwavelength.space"),
+  title: TITLE,
+  description: DESCRIPTION,
   openGraph: {
-    title: "Basalt: Ein Ziel. Wirklich durchgezogen.",
-    description:
-      "Ein Ziel, von der App durchgesetzt. Sperren oder planen, mit festem Ende.",
+    title: TITLE,
+    description: DESCRIPTION,
     type: "website",
+    locale: "de_DE",
+    url: "https://onwavelength.space",
   },
 };
 
@@ -39,10 +48,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${dmSans.variable} ${bricolage.variable}`}>
-      <body className="min-h-screen bg-background text-foreground font-sans antialiased">
+    // ⚠️ Was lang="en" while every string on the page was German.
+    <html
+      lang="de"
+      className={`${figtree.variable} ${dmSans.variable} ${bricolage.variable}`}
+    >
+      {/* The @sneas/telephone script used to load here on every route. Nothing has rendered
+          an <iphone-16-max> since the site was rebuilt for Basalt, so it was one third-party
+          CDN request per pageview for a mockup that no page draws. */}
+      <body className="min-h-screen bg-paper text-ink font-sans antialiased">
         {children}
-        <Script src="https://cdn.jsdelivr.net/npm/@sneas/telephone@1/iphone-16-max.js" strategy="afterInteractive" />
       </body>
     </html>
   );

@@ -1,230 +1,284 @@
 "use client";
 
-// Basalt - Follow Through, marketing page.
+// Basalt - Follow Through, marketing page for the dedicated domain.
 //
-// Replaced the On Wavelength page on 2026-07-21. That one sold a group calendar
-// with heatmap voting, sport lineups and a phone mockup, i.e. a product that no
-// longer exists. This one is deliberately short: the app is not in the store
-// yet, so an elaborate page would mostly be claims nobody can check.
+// Rewritten 2026-08-16. The version before this one was written on 2026-07-21,
+// before the app existed in the form it ships in, and every load of it made a
+// promise the store build does not keep:
 //
-// No mascots, no photography. The subject is self-discipline and the product
-// brief rules decoration out.
+//   · "Ein Ziel. Basalt lässt genau eines zu."  The app runs several routines
+//     side by side, each with its own weekly frequency, no main one. That claim
+//     sat in the h1, in the sub-copy, in <title> and in the OG description.
+//   · "Zwei Arten von Zielen", quit vs. build.  That framework is gone. A
+//     routine is a thing you tick off; blocking is one capability near the end,
+//     and the positioning rule in ASC-LISTING.md keeps it there on purpose.
+//   · "Du legst am Anfang fest, wie lange du durchziehst."  The target span is
+//     optional and empty is the normal case.
+//   · The widget, the plan, sharing, and what is free vs. paid: all missing,
+//     although the store subtitle is literally "gewohnheiten im widget".
+//   · Dead "#" links where the privacy policy and the terms belong.
+//
+// Every claim below is lifted from the approved German store copy in
+// AI-Brain/Projects/Basalt/ASC-LISTING.md. Nothing here is promised that the
+// shipped build does not do.
+//
+// Look: design v3 (2026-08-04), the app's own. Figtree on white, ink #111111,
+// monochrome, emphasis by weight and size rather than by hue. The warm ember
+// palette this page used to carry belongs to design v1/v2 and no longer exists
+// anywhere in the app. Same treatment the /s/<code> invite page already got.
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.06, duration: 0.7, ease },
+    transition: { delay: i * 0.05, duration: 0.6, ease },
   }),
 };
 
-// Apple resolves by id, so the name slug cannot go stale on a rename.
+// Apple resolves by id, so a rename cannot make this link go stale.
 const APP_STORE_URL = "https://apps.apple.com/de/app/id6762440839";
+const PRIVACY_URL = "https://getklar.org/basalt/privacy";
+const TERMS_URL = "https://getklar.org/basalt/terms";
+const CONTACT = "support@getklar.org";
 
-const WAYS = [
+const FEATURES = [
   {
-    label: "Etwas lassen",
-    title: "Die App sperrt, was dich abhält",
-    body: "Du wählst selbst, welche Apps und Website-Kategorien blockiert werden. Das läuft über Apples Bildschirmzeit, ist also eine echte Sperre und kein Hinweis, den man wegtippt. Welche Apps du wählst, sehen wir nie.",
+    title: "mehr als eine routine",
+    body: "mehrere laufen nebeneinander, jede mit ihrer eigenen anzahl pro woche. dreimal laufen, sonntags zu hause anrufen, unter der woche zwanzig minuten lesen. keine rangfolge, keine hauptroutine.",
   },
   {
-    label: "Etwas aufbauen",
-    title: "Die App plant, was zählt",
-    body: "Aus deinem Ziel wird ein konkreter Plan mit festen Terminen, über die Woche verteilt statt drei Tage am Stück. Auf Wunsch legst du ihn mit einem Tap in deinen Apple Kalender.",
+    title: "eine routine darf enden",
+    body: "wenn du willst, gibst du ihr einen zeitraum. ist der vorbei, ist die routine fertig. fertig, nicht abgebrochen. es gibt keine zahl, die ewig weiterläuft und verteidigt werden will: ein verpasster dienstag ist ein verpasster dienstag und kein grund, die app zu löschen. lässt du den zeitraum leer, läuft die routine einfach weiter.",
+  },
+  {
+    title: "das widget ist die app",
+    body: "abgehakt wird auf dem homescreen, ohne etwas zu öffnen. in der app legst du eine routine an, schaust dir den plan an und änderst, was sie von dir verlangt. an den meisten tagen kommst du gar nicht so weit.",
+  },
+  {
+    title: "plan und kalender",
+    body: "die planansicht zeigt, was die woche von dir will. wenn du es lieber im kalender hast, exportierst du sie dorthin.",
+  },
+  {
+    title: "eine person, nur lesen",
+    body: "du kannst eine routine mit einer person teilen, per code oder qr. sie sieht, wie es läuft. sie kann nichts ändern, dich nicht anstupsen, dir nichts wegnehmen. ein fenster, kein griff.",
+  },
+  {
+    title: "leise mit absicht",
+    body: "monochrom, keine akzentfarbe, folgt hell und dunkel. kein feed, kein profil, keine punkte, keine bestenliste, nichts zum scrollen. die app hat keinen grund, dich festzuhalten.",
   },
 ];
 
+function StoreButton({ className = "" }: { className?: string }) {
+  return (
+    <a
+      href={APP_STORE_URL}
+      className={`inline-flex h-12 items-center justify-center rounded-full bg-[var(--ink)] px-7 text-[15px] font-bold text-[var(--paper)] transition-opacity hover:opacity-85 ${className}`}
+    >
+      laden im App&nbsp;Store
+    </a>
+  );
+}
+
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      {/* ── Nav */}
-      <nav
-        className="fixed top-0 left-0 right-0 z-50"
-        style={{
-          background: "rgba(10, 10, 12, 0.85)",
-          backdropFilter: "blur(20px) saturate(140%)",
-        }}
-      >
-        <div className="max-w-[1180px] mx-auto px-6 sm:px-8 h-16 flex items-center justify-between">
-          <span className="text-[15px] font-semibold tracking-tight text-[var(--foreground)]">
-            Basalt
-          </span>
-          <a
-            href={APP_STORE_URL}
-            className="h-9 px-5 inline-flex items-center justify-center rounded-lg bg-[var(--accent)] text-[var(--background)] text-[13px] font-semibold transition-opacity hover:opacity-90"
-          >
-            App laden
-          </a>
-        </div>
-      </nav>
+    <main className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
+      <div className="mx-auto max-w-[860px] px-6 py-16 sm:px-8 sm:py-24">
+        {/* ── Masthead */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          custom={0}
+          variants={fadeUp}
+          className="mb-14 flex items-center gap-4"
+        >
+          <Image
+            src="/basalt/icon.png"
+            alt="App-Symbol von Basalt"
+            width={56}
+            height={56}
+            priority
+            className="rounded-[14px] border border-[var(--line)]"
+          />
+          <div>
+            <div className="text-[22px] font-extrabold leading-[1.1] tracking-[-0.02em]">
+              basalt
+            </div>
+            <div className="text-[13px] font-medium text-[var(--mute)]">
+              gewohnheiten im widget · iPhone
+            </div>
+          </div>
+        </motion.div>
 
-      {/* ── Hero */}
-      <section className="relative pt-36 sm:pt-44 pb-20 sm:pb-28 px-6 sm:px-8 overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255, 158, 109, 0.06) 0%, rgba(10, 10, 12, 0) 70%)",
-          }}
-        />
-        <div className="relative max-w-[1180px] mx-auto">
-          <motion.h1
-            initial="hidden"
-            animate="visible"
-            custom={0}
-            variants={fadeUp}
-            className="text-[clamp(40px,8vw,76px)] font-extrabold leading-[0.95] tracking-[-0.035em] max-w-[16ch]"
-          >
-            Ein Ziel.
-            <br />
-            <span className="text-[var(--accent)]">Wirklich durchgezogen.</span>
-          </motion.h1>
+        {/* ── Hero. The store listing's own opening line. */}
+        <section className="grid items-center gap-10 sm:grid-cols-[1fr_auto]">
+          <div>
+            <motion.h1
+              initial="hidden"
+              animate="visible"
+              custom={1}
+              variants={fadeUp}
+              className="text-[clamp(34px,7vw,60px)] font-extrabold leading-[1.04] tracking-[-0.03em]"
+            >
+              die meisten tage{" "}
+              <span className="text-[var(--mute)]">bleibt diese app zu.</span>
+            </motion.h1>
 
-          <motion.p
-            initial="hidden"
-            animate="visible"
-            custom={1}
-            variants={fadeUp}
-            className="mt-7 text-[17px] sm:text-[19px] leading-[1.6] text-[var(--text-secondary)] max-w-[54ch]"
-          >
-            Die meisten Vorsätze scheitern nicht am Willen, sondern daran, dass man
-            sich zehn davon gleichzeitig vornimmt. Basalt lässt genau eines zu und
-            sorgt dafür, dass du drankommst.
-          </motion.p>
+            <motion.p
+              initial="hidden"
+              animate="visible"
+              custom={2}
+              variants={fadeUp}
+              className="mt-6 max-w-[52ch] text-[17px] font-medium leading-[1.6] text-[var(--mute)]"
+            >
+              du schreibst auf, was du durchziehen willst, und wie oft pro woche.
+              abgehakt wird auf dem homescreen. das ist der ganze ablauf.
+            </motion.p>
 
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              custom={3}
+              variants={fadeUp}
+              className="mt-9 flex flex-wrap items-center gap-4"
+            >
+              <StoreButton />
+              <span className="text-[14px] font-medium text-[var(--mute)]">
+                iPhone, ab iOS&nbsp;16.4
+              </span>
+            </motion.div>
+          </div>
+
+          {/* The app's own hero object, unretouched. */}
           <motion.div
             initial="hidden"
             animate="visible"
             custom={2}
             variants={fadeUp}
-            className="mt-10 flex flex-wrap items-center gap-4"
+            aria-hidden
+            className="order-first justify-self-center sm:order-none sm:justify-self-end"
           >
-            <a
-              href={APP_STORE_URL}
-              className="h-12 px-7 inline-flex items-center justify-center rounded-xl bg-[var(--accent)] text-[var(--background)] text-[15px] font-semibold transition-opacity hover:opacity-90"
-            >
-              App laden
-            </a>
-            <span className="text-[14px] text-[var(--text-tertiary)]">
-              iOS · Android folgt
-            </span>
+            <Image
+              src="/basalt/tower.png"
+              alt=""
+              width={760}
+              height={760}
+              priority
+              className="h-auto w-[180px] sm:w-[230px]"
+            />
           </motion.div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── Two ways a goal gets enforced */}
-      <section className="relative py-20 sm:py-28 px-6 sm:px-8 border-t border-[var(--border-subtle)]">
-        <div className="max-w-[1180px] mx-auto">
-          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
-            Zwei Arten von Zielen
+        {/* ── What it does */}
+        <section className="mt-20 rounded-[20px] border border-[var(--line)] bg-[var(--surface)] p-7 sm:mt-28 sm:p-9">
+          {FEATURES.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              custom={i % 3}
+              variants={fadeUp}
+              className="mb-7 last:mb-0"
+            >
+              <h2 className="text-[18px] font-bold tracking-[-0.01em]">
+                {f.title}
+              </h2>
+              <p className="mt-1.5 max-w-[62ch] text-[15px] font-medium leading-[1.6] text-[var(--mute)]">
+                {f.body}
+              </p>
+            </motion.div>
+          ))}
+        </section>
+
+        {/* ── Blocking. One section, near the end, described as focus: the
+             positioning rule from ASC-LISTING.md, kept here too. */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          custom={0}
+          variants={fadeUp}
+          className="mt-20 border-t border-[var(--line)] pt-14 sm:mt-28"
+        >
+          <Image
+            src="/basalt/shield.png"
+            alt=""
+            width={512}
+            height={512}
+            loading="lazy"
+            aria-hidden
+            className="mb-5 h-auto w-[68px]"
+          />
+          <h2 className="max-w-[18ch] text-[28px] font-extrabold leading-[1.1] tracking-[-0.03em] sm:text-[36px]">
+            wenn das handy im weg steht
+          </h2>
+          <p className="mt-5 max-w-[62ch] text-[17px] font-medium leading-[1.6] text-[var(--mute)]">
+            basalt kann die apps und webseiten schließen, die an dir ziehen: auf
+            zuruf, wenn du dir eine stunde zurückholen willst, oder nachts nach
+            plan. was geschlossen wird, wählst du in apples eigener
+            bildschirmzeit-auswahl aus. die app erfährt nie, was du gewählt hast,
+            die auswahl bleibt auf deinem gerät. das ist reibung, kein schloss,
+            das sich nicht knacken lässt, und reibung ist meistens genau der
+            teil, der gefehlt hat.
           </p>
-          <div className="mt-10 grid gap-10 sm:gap-14 sm:grid-cols-2">
-            {WAYS.map((w, i) => (
-              <motion.div
-                key={w.label}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-80px" }}
-                custom={i}
-                variants={fadeUp}
-              >
-                <p className="text-[13px] font-semibold text-[var(--accent)]">
-                  {w.label}
-                </p>
-                <h2 className="mt-3 text-[24px] sm:text-[28px] font-bold tracking-[-0.02em] leading-[1.2]">
-                  {w.title}
-                </h2>
-                <p className="mt-4 text-[16px] leading-[1.65] text-[var(--text-secondary)] max-w-[46ch]">
-                  {w.body}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+          <p className="mt-6 max-w-[62ch] text-[15px] font-medium leading-[1.6] text-[var(--mute)]">
+            routinen, abhaken, das widget, der plan und das teilen sind kostenlos
+            und bleiben es. das schließen ist der bezahlte teil: premium, als
+            abo monatlich oder jährlich.
+          </p>
+        </motion.section>
 
-      {/* ── The actual differentiator */}
-      <section className="relative py-20 sm:py-28 px-6 sm:px-8 border-t border-[var(--border-subtle)]">
-        <div className="max-w-[1180px] mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            custom={0}
-            variants={fadeUp}
-            className="max-w-[62ch]"
-          >
-            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
-              Der Unterschied
-            </p>
-            <h2 className="mt-5 text-[30px] sm:text-[40px] font-extrabold tracking-[-0.03em] leading-[1.1]">
-              Dein Ziel wird fertig.
-            </h2>
-            <p className="mt-5 text-[17px] leading-[1.65] text-[var(--text-secondary)]">
-              Du legst am Anfang fest, wie lange du durchziehst. Läuft die Zeit ab,
-              gilt das Ziel als erledigt, weil die Gewohnheit dann steht. Andere
-              Blocker sind darauf ausgelegt, dich dauerhaft zahlen zu lassen. Hier
-              ist das Ende eingebaut.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+        {/* ── Close */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          custom={0}
+          variants={fadeUp}
+          className="mt-20 border-t border-[var(--line)] pt-14 sm:mt-28"
+        >
+          <h2 className="max-w-[22ch] text-[28px] font-extrabold leading-[1.15] tracking-[-0.03em] sm:text-[36px]">
+            basalt verspricht dir nicht, dass du durchhältst.
+          </h2>
+          <p className="mt-5 max-w-[56ch] text-[17px] font-medium leading-[1.6] text-[var(--mute)]">
+            es hält den nachweis dort, wo du sowieso hinschaust, und geht dir
+            sonst aus dem weg.
+          </p>
+          <StoreButton className="mt-9" />
+        </motion.section>
 
-      {/* ── Final CTA */}
-      <section className="relative py-24 sm:py-32 px-6 sm:px-8 border-t border-[var(--border-subtle)]">
-        <div className="max-w-[1180px] mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            custom={0}
-            variants={fadeUp}
-          >
-            <h2 className="text-[28px] sm:text-[36px] font-extrabold tracking-[-0.03em] leading-[1.15] max-w-[20ch]">
-              Was nimmst du dir vor?
-            </h2>
-            <a
-              href={APP_STORE_URL}
-              className="mt-8 h-12 px-7 inline-flex items-center justify-center rounded-xl bg-[var(--accent)] text-[var(--background)] text-[15px] font-semibold transition-opacity hover:opacity-90"
-            >
-              App laden
-            </a>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Footer */}
-      <footer className="border-t border-[var(--border-subtle)] py-10 px-6 sm:px-8">
-        <div className="max-w-[1180px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-          <div className="flex items-center gap-3">
-            <span className="text-[13px] font-semibold text-[var(--foreground)]">
-              Basalt
-            </span>
-            <span className="text-[12px] text-[var(--text-tertiary)]">2026</span>
-          </div>
-          <nav className="flex gap-7 text-[13px] text-[var(--text-tertiary)] font-medium">
-            {/* TODO: real legal pages before the store release. */}
-            <a href="#" className="hover:text-[var(--foreground)] transition-colors">
+        {/* ── Footer */}
+        <footer className="mt-20 border-t border-[var(--line)] pt-7 sm:mt-28">
+          <p className="text-[13px] font-medium leading-[2] tracking-[0.02em] text-[var(--mute)]">
+            <a href={PRIVACY_URL} className="text-[var(--ink)] underline">
               Datenschutz
             </a>
-            <a href="#" className="hover:text-[var(--foreground)] transition-colors">
-              Impressum
+            {" · "}
+            <a href={TERMS_URL} className="text-[var(--ink)] underline">
+              Nutzungsbedingungen
             </a>
+            {" · "}
+            <a href={`mailto:${CONTACT}`} className="text-[var(--ink)] underline">
+              {CONTACT}
+            </a>
+            <br />
+            Von Alain Kessler (Schweiz), als{" "}
             <a
-              href="mailto:support@onwavelength.space"
-              className="hover:text-[var(--foreground)] transition-colors"
+              href="https://getklar.org"
+              className="text-[var(--ink)] underline"
             >
-              Support
+              Klar
             </a>
-          </nav>
-        </div>
-      </footer>
+            . Daten in der Europäischen Union.
+          </p>
+        </footer>
+      </div>
     </main>
   );
 }

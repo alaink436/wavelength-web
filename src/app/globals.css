@@ -1,51 +1,37 @@
 @import "tailwindcss";
 
-/* Basalt, from the Claude Design handoff. Mirrors src/theme/index.ts in the app repo, hex rather than OKLCH
-   so both codebases carry byte-identical values and cannot drift apart. */
+/* Basalt design v3 (2026-08-04), taken from src/theme/palette.ts `light` in the app repo.
+   Hex rather than OKLCH so both codebases carry byte-identical values and cannot drift apart.
+
+   ⚠️ Superseded 2026-08-16: this block used to hold design v1/v2 — near-black #0A0A0C under a
+   warm ember gradient, accent #FF9E6D — under a comment claiming it mirrored the app. That
+   stopped being true when the app inverted to v3: white ground, #111111 ink, and no accent
+   colour at all, because emphasis there comes from weight, size and a black/white flip rather
+   than from hue. The ember tokens were dead by then anyway; nothing but the old landing page
+   painted them, and /i/<handle> carries its own colours inline. */
 :root {
-  /* Backgrounds, deepest first */
-  --background:        #0A0A0C;
-  --surface:           #141519;
-  --surface-elevated:  #1C1D22;
+  --paper:             #FFFFFF;
+  --surface:           #F7F7F8;
+  --surface-high:      #E9E9EC;
 
-  /* Foregrounds */
-  --foreground:        #F7F6F4;
-  --text-secondary:    #9A9AA2;
-  --text-tertiary:     #8A8A93;
-  --text-quaternary:   #6B6B73;
+  --ink:               #111111;
+  --mute:              #9C9CA1;
+  --faint:             #B0B0B5;
 
-  /* The warm ember gradient from the handoff; accent is its mid stop */
-  --accent:            #FF9E6D;
-  --accent-dark:       #F0567A;
-  --accent-light:      #FFD9A8;
-  --accent-muted:      rgba(255, 158, 109, 0.12);
-
-  /* Lines */
-  --border:            #26272C;
-  --border-subtle:     #1B1C21;
-
-  --error:             #F0567A;
-  --success:           #FF9E6D;
+  --line:              #E0E0E3;
+  --danger:            #D8434F;
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-paper: var(--paper);
   --color-surface: var(--surface);
-  --color-surface-elevated: var(--surface-elevated);
-  --color-foreground: var(--foreground);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-tertiary: var(--text-tertiary);
-  --color-text-quaternary: var(--text-quaternary);
-  --color-accent: var(--accent);
-  --color-accent-dark: var(--accent-dark);
-  --color-accent-light: var(--accent-light);
-  --color-accent-muted: var(--accent-muted);
-  --color-border: var(--border);
-  --color-border-subtle: var(--border-subtle);
-  --color-error: var(--error);
-  --color-success: var(--success);
-  --font-sans: var(--font-dm-sans);
-  --font-display: var(--font-bricolage);
+  --color-surface-high: var(--surface-high);
+  --color-ink: var(--ink);
+  --color-mute: var(--mute);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-figtree);
 }
 
 /* 4pt spacing scale, semantic names */
@@ -62,13 +48,15 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
-  font-feature-settings: "ss03", "cv11";
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-figtree), system-ui, -apple-system, sans-serif;
 }
 
+/* The app is iOS-only and light-first; the site does not offer a dark variant, so say so
+   rather than let the browser tint form controls and scrollbars for a theme that is not here. */
 html {
+  color-scheme: light;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
 }
@@ -78,10 +66,10 @@ html {
    glow, section numbering) were removed on 2026-07-22: they carried the old
    blue hue and nothing referenced them after the site was rebuilt. */
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--background); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
 
 ::selection {
-  background: rgba(255, 158, 109, 0.3);
-  color: var(--foreground);
+  background: rgba(17, 17, 17, 0.12);
+  color: var(--ink);
 }
