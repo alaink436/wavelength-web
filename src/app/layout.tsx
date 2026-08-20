@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Figtree, DM_Sans, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
+import KlarTracker from "./KlarTracker";
 
 // The app's own face since design v3 (2026-08-04): one geometric sans for the whole scale,
 // levels separated by weight and size alone. See src/theme/fonts.ts in the app repo.
@@ -75,6 +76,7 @@ export default function RootLayout({
           CDN request per pageview for a mockup that no page draws. */}
       <body className="min-h-screen bg-paper text-ink font-sans antialiased">
         {children}
+        <KlarTracker />
       </body>
     </html>
   );
