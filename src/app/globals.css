@@ -72,59 +72,35 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-/* The typographic field behind the page — see wordmark-field.tsx. Fixed, so it stays put while
-   the page scrolls past it, and clipped, so the tilted plane's corners never widen the
-   document. The rotation and the sway are the only things that move, and they move the one
-   container rather than the ~700 words inside it. */
-.wordmark-field {
-  position: fixed;
+/* Der Schleier ueber dem Shader — siehe shader-ground.tsx.
+   Deckendes --paper dort, wo Text steht, offen dort, wo das Telefon steht. Auf dem Telefon
+   laeuft der Verlauf von oben nach unten, weil die Spalte dort ueber dem Bild steht und nicht
+   daneben; ab lg kippt er in die Diagonale.
+
+   ⚠️ Die Farbstopps stehen in rgb(255 255 255 / a) und nicht in `transparent`. Safari
+   interpoliert `transparent` ueber rgba(0,0,0,0) und legt damit einen grauen Saum in die
+   Mitte jedes Verlaufs, der auf weissem Grund sofort auffaellt. */
+.ground-scrim {
+  position: absolute;
   inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  color: var(--ink);
+  background: linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.94) 0%,
+    rgb(255 255 255 / 0.9) 34%,
+    rgb(255 255 255 / 0.66) 68%,
+    rgb(255 255 255 / 0.34) 100%
+  );
 }
 
-.wordmark-field__plane {
-  position: absolute;
-  width: 2300px;
-  height: 2300px;
-  left: 50%;
-  top: 50%;
-  margin: -1150px 0 0 -1150px;
-  transform: rotate(-30deg);
-  animation: wordmark-sway 18s ease-in-out infinite;
-}
-
-/* Past ~1900px the generated 2300px plane no longer reaches the corners of a rotated viewport.
-   Scaling it is cheaper than generating a bigger field, and at this ink nobody reads the grain. */
-@media (min-width: 1900px) {
-  .wordmark-field__plane {
-    scale: 1.35;
-  }
-}
-
-.wordmark-field__row {
-  position: absolute;
-  left: 0;
-  display: flex;
-  align-items: flex-end;
-  white-space: nowrap;
-}
-
-@keyframes wordmark-sway {
-  0%,
-  100% {
-    translate: -6px 0;
-  }
-  50% {
-    translate: 6px 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wordmark-field__plane {
-    animation: none;
+@media (min-width: 1024px) {
+  .ground-scrim {
+    background: linear-gradient(
+      104deg,
+      rgb(255 255 255 / 0.97) 0%,
+      rgb(255 255 255 / 0.93) 38%,
+      rgb(255 255 255 / 0.6) 70%,
+      rgb(255 255 255 / 0.22) 100%
+    );
   }
 }
 
