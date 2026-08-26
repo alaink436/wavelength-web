@@ -22,16 +22,21 @@
 // ⚠️ Jeder Satz hier ist aus der freigegebenen englischen Store-Beschreibung belegbar,
 // AI-Brain/Projects/Basalt/ASC-LISTING.md. Nichts wird versprochen, was der ausgelieferte
 // Build nicht tut. Die Belege, Satz fuer Satz:
-//   · "lives in a widget … one tap marks the day done" → "check in from the home screen,
-//     without opening anything"
-//   · "several routines run side by side, each with its own count per week" → "run several at
-//     once, each with its own weekly frequency"
-//   · "give one an end and it finishes" → "give a routine a target span … when the span is
-//     over, the routine is done. finished, not abandoned."
-//   · "free on iPhone … shutting the apps that pull at you is the paid upgrade" → "routines,
-//     check-ins, the widget, the plan and sharing are free and stay free. the shutting part is
-//     the paid upgrade."
+//   · "consistency is programmable." ist die These der Seite, keine Funktionszusage: was der
+//     Nutzer programmiert, sind die Anzahl pro Woche, der Ort an dem sie zaehlt, das Ende der
+//     Routine und die Apps, die dafuer zugehen. Alle vier stehen in der Beschreibung.
+//   · "how many times a week" → "run several at once, each with its own weekly frequency"
+//   · "where it counts" ist woertlich der Titel des Orts-Screens in der App
+//     (routine-places.tsx, Stack.Screen-Option), und der Screen liegt seit Build 14 im Binary.
+//   · "tick it off from the home screen" → "check in from the home screen, without opening
+//     anything"
+//   · "free. the app shutting is the paid upgrade." → "routines, check-ins, the widget, the
+//     plan and sharing are free and stay free. the shutting part is the paid upgrade."
 //   · die Vertrauenszeile steht wortgleich unter "quiet on purpose".
+//
+// ⚠️ Die Positionierungsregel aus ASC-LISTING.md gilt hier mit: Digital Wellbeing und
+// Gewohnheiten, das Zumachen von Apps bleibt EIN Nebensatz und wird nie zum Kern. Deshalb
+// steht es in der Zeile unter dem Knopf und nicht in der Ueberschrift.
 //
 // Look: design v3 (2026-08-04), the app's own — Figtree, ink #111111 on white, no accent
 // colour.
@@ -96,7 +101,7 @@ export default function Home() {
             animate="visible"
             custom={0}
             variants={fadeUp}
-            className="flex items-center gap-3.5"
+            className="flex items-center justify-center gap-3.5 lg:justify-start"
           >
             <Image
               src="/basalt/icon.png"
@@ -121,21 +126,15 @@ export default function Home() {
             {/* ── Text. flex-none auf dem Telefon: die Spalte bekommt ihre natuerliche Hoehe,
                  und was uebrig bleibt, geht an das Geraet darunter. Waeren beide flex-1,
                  teilten sie sich den Platz haelftig und der Knopf rutschte nach oben weg. */}
-            <div className="flex flex-none flex-col justify-center py-4 sm:py-7 lg:flex-1 lg:py-0">
+            <div className="flex flex-none flex-col items-center justify-center py-4 text-center sm:py-7 lg:flex-1 lg:items-start lg:py-0 lg:text-left">
               <motion.h1
                 initial="hidden"
                 animate="visible"
                 custom={1}
                 variants={fadeUp}
-                className="max-w-[13ch] text-balance text-[clamp(32px,min(9.4vw,6.8vh),58px)] font-extrabold leading-[1.03] tracking-[-0.035em]"
+                className="max-w-[12ch] text-balance text-[clamp(34px,min(10.4vw,7.4vh),62px)] font-extrabold leading-[1.02] tracking-[-0.038em]"
               >
-                you won&apos;t open this app.{" "}
-                {/* Eigener Block, damit der zweite Satz immer auf einer neuen Zeile beginnt.
-                    Inline gesetzt bricht er dort, wo die Zeile zufaellig endet, und dann steht
-                    "that" allein am Ende der zweiten Zeile. */}
-                <span className="block text-[var(--mute)]">
-                  that is the point.
-                </span>
+                consistency is programmable.
               </motion.h1>
 
               <motion.p
@@ -143,12 +142,10 @@ export default function Home() {
                 animate="visible"
                 custom={2}
                 variants={fadeUp}
-                className="mt-4 max-w-[46ch] text-[clamp(15px,min(4.2vw,2.1vh),18px)] font-medium leading-[1.55] text-[var(--mute)] sm:mt-5"
+                className="mt-4 max-w-[40ch] text-balance text-[clamp(15px,min(4.2vw,2.1vh),18px)] font-medium leading-[1.55] text-[var(--mute)] sm:mt-5"
               >
-                basalt lives in a widget on your home screen, and one tap marks
-                the day done. several routines run side by side, each with its
-                own count per week. give one an end and it finishes, instead of
-                running forever.
+                set what you want to hold, how many times a week, and where it
+                counts. then tick it off from the home screen.
               </motion.p>
 
               <motion.div
@@ -156,7 +153,7 @@ export default function Home() {
                 animate="visible"
                 custom={3}
                 variants={fadeUp}
-                className="mt-5 flex flex-col items-start gap-2.5 sm:mt-8"
+                className="mt-5 flex flex-col items-center gap-2.5 sm:mt-8 lg:items-start"
               >
                 <a
                   href={APP_STORE_URL}
@@ -178,9 +175,11 @@ export default function Home() {
                     />
                   </svg>
                 </a>
-                <span className="max-w-[44ch] text-[13px] font-medium leading-[1.5] text-[var(--mute)] sm:text-[13.5px]">
-                  free on iPhone, iOS&nbsp;16.4 or later. shutting the apps that
-                  pull at you is the paid upgrade.
+                {/* Eine Zeile, nicht zwei: auf 393px kostet die zweite 20px, die das
+                    Geraet besser gebrauchen kann. Die Systemvoraussetzung steht dafuer
+                    unten in der Fusszeile. */}
+                <span className="text-[13px] font-medium leading-[1.5] text-[var(--mute)] sm:text-[13.5px]">
+                  free. the app shutting is the paid upgrade.
                 </span>
               </motion.div>
 
@@ -193,7 +192,7 @@ export default function Home() {
                 animate="visible"
                 custom={4}
                 variants={fadeUp}
-                className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--faint)] sm:mt-8 sm:text-[12px] sm:tracking-[0.14em]"
+                className="mt-5 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--faint)] sm:mt-8 sm:text-[12px] sm:tracking-[0.14em] lg:justify-start"
               >
                 {QUIET.map((q, i) => (
                   <li key={q} className="flex items-center gap-2.5">
@@ -223,7 +222,7 @@ export default function Home() {
               animate="visible"
               custom={2.5}
               variants={fadeUp}
-              className="relative min-h-[120px] flex-1 overflow-hidden [mask-image:linear-gradient(to_bottom,#000_74%,transparent_100%)] lg:min-h-0 lg:w-[46%] lg:max-w-[580px] lg:flex-none lg:[mask-image:linear-gradient(to_bottom,#000_80%,transparent_100%)]"
+              className="relative min-h-[140px] flex-1 overflow-hidden [mask-image:linear-gradient(to_bottom,#000_82%,transparent_100%)] lg:min-h-0 lg:w-[46%] lg:max-w-[580px] lg:flex-none lg:[mask-image:linear-gradient(to_bottom,#000_80%,transparent_100%)]"
             >
               <Image
                 src="/basalt/phone-routines.png"
@@ -231,8 +230,8 @@ export default function Home() {
                 width={980}
                 height={1764}
                 priority
-                sizes="(min-width: 1024px) 660px, 88vw"
-                className="absolute left-1/2 top-0 w-[88%] max-w-[380px] -translate-x-1/2 lg:w-[124%] lg:max-w-none"
+                sizes="(min-width: 1024px) 720px, 96vw"
+                className="absolute left-1/2 top-0 w-[96%] max-w-[440px] -translate-x-1/2 lg:w-[124%] lg:max-w-none"
               />
             </motion.div>
           </div>
@@ -245,7 +244,7 @@ export default function Home() {
             animate="visible"
             custom={5}
             variants={fadeUp}
-            className="flex flex-wrap items-center gap-x-2 gap-y-0.5 pt-3 text-[12.5px] font-medium text-[var(--mute)] sm:text-[13px]"
+            className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 pt-3 text-[11.5px] font-medium text-[var(--mute)] sm:text-[13px] lg:justify-start"
           >
             <a href={PRIVACY_URL} className="py-1.5 text-[var(--ink)] underline">
               Privacy
@@ -264,9 +263,14 @@ export default function Home() {
             <span aria-hidden className="hidden sm:inline">
               ·
             </span>
-            <span className="w-full sm:w-auto">
-              Made by Alain Kessler, Switzerland
+            <span aria-hidden>·</span>
+            <span>iPhone, iOS&nbsp;16.4 or later</span>
+            {/* Der Punkt faellt auf dem Telefon weg, weil die Zeile genau hier umbricht und
+                ein fuehrender Trenner am Zeilenanfang wie ein Tippfehler aussieht. */}
+            <span aria-hidden className="hidden sm:inline">
+              ·
             </span>
+            <span>Made by Alain Kessler, Switzerland</span>
           </motion.footer>
         </div>
       </main>
