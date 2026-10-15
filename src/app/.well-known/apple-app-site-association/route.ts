@@ -8,6 +8,7 @@
 // Paths that should open in-app instead of in-browser:
 //   /i/*  -> influencer tracking links
 //   /s/*  -> routine invites; the code is the path segment
+//   /p/*  -> somebody's fixed invite link, for any number of people (2026-10-15)
 // (/g/* group invites and /e/* event invites were removed with the calendar app.)
 //
 // ⚠️ Order matters when changing this. iOS caches the AASA, and the app only
@@ -31,6 +32,7 @@ export function GET() {
           components: [
             { "/": "/i/*", comment: "Influencer tracking" },
             { "/": "/s/*", comment: "Routine invite" },
+            { "/": "/p/*", comment: "Personal invite link" },
           ],
         },
       ],
