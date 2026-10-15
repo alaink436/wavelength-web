@@ -9,7 +9,10 @@
 //   /i/*  -> influencer tracking links
 //   /s/*  -> routine invites; the code is the path segment
 //   /p/*  -> somebody's fixed invite link, for any number of people (2026-10-15)
-// (/g/* group invites and /e/* event invites were removed with the calendar app.)
+//   /e/*  -> a Basalt event, e.g. /e/winter-arc-2026 (2026-10-15). The path was
+//            the calendar app's event invite once; that app is gone, and an old
+//            link of it now opens Basalt, which says the event is not there.
+// (/g/* group invites were removed with the calendar app.)
 //
 // ⚠️ Order matters when changing this. iOS caches the AASA, and the app only
 // claims a path once this file lists it — so this has to be deployed BEFORE the
@@ -33,6 +36,7 @@ export function GET() {
             { "/": "/i/*", comment: "Influencer tracking" },
             { "/": "/s/*", comment: "Routine invite" },
             { "/": "/p/*", comment: "Personal invite link" },
+            { "/": "/e/*", comment: "Basalt event" },
           ],
         },
       ],
